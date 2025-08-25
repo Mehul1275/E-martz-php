@@ -1,5 +1,5 @@
 <?php require_once('header.php'); ?>
-
+<title>Track Order | E-martz</title>
 <div class="page">
     <div class="container">
         <div class="row">

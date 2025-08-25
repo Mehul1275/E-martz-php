@@ -52,11 +52,13 @@ if(isset($_POST['form1'])) {
 
     if($valid == 1) {
 
-    	$statement = $pdo->prepare("SHOW TABLE STATUS LIKE 'tbl_product'");
+    	// Get the next auto-increment ID more reliably
+    	$statement = $pdo->prepare("SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'tbl_product'");
 		$statement->execute();
 		$result = $statement->fetchAll();
-		foreach($result as $row) {
-			$ai_id=$row[10];
+		$ai_id = 1; // Default fallback
+		if(!empty($result)) {
+			$ai_id = $result[0]['AUTO_INCREMENT'];
 		}
 
     	if( isset($_FILES['photo']["name"]) && isset($_FILES['photo']["tmp_name"]) )
@@ -69,11 +71,13 @@ if(isset($_POST['form1'])) {
             $photo_temp = $_FILES['photo']["tmp_name"];
             $photo_temp = array_values(array_filter($photo_temp));
 
-        	$statement = $pdo->prepare("SHOW TABLE STATUS LIKE 'tbl_product_photo'");
+        	// Get next ID for product photos more reliably
+        	$statement = $pdo->prepare("SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'tbl_product_photo'");
 			$statement->execute();
 			$result = $statement->fetchAll();
-			foreach($result as $row) {
-				$next_id1=$row[10];
+			$next_id1 = 1; // Default fallback
+			if(!empty($result)) {
+				$next_id1 = $result[0]['AUTO_INCREMENT'];
 			}
 			$z = $next_id1;
 
@@ -98,7 +102,9 @@ if(isset($_POST['form1'])) {
             }            
         }
 
-		$final_name = 'product-featured-'.$ai_id.'.'.$ext;
+		// Generate unique image name with timestamp to prevent conflicts
+		$timestamp = time();
+		$final_name = 'product-featured-'.$ai_id.'-'.$timestamp.'.'.$ext;
         move_uploaded_file( $path_tmp, '../assets/uploads/'.$final_name );
 
 		//Saving data into the main table tbl_product

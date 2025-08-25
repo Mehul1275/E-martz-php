@@ -734,13 +734,7 @@ if(isset($_POST['form7_10'])) {
     } */
 }
 
-if(isset($_POST['form9'])) {
-    // updating the database
-    $statement = $pdo->prepare("UPDATE tbl_settings SET paypal_email=?, bank_detail=? WHERE id=1");
-    $statement->execute(array($_POST['paypal_email'],$_POST['bank_detail']));
 
-    $success_message = 'Payment Settings is updated successfully.';
-}
 
 if(isset($_POST['form10'])) {
     // updating the database
@@ -962,7 +956,7 @@ foreach ($result as $row) {
                         <li><a href="#tab_5" data-toggle="tab">Products</a></li>
                         <li><a href="#tab_6" data-toggle="tab">Home Settings</a></li>
                         <li><a href="#tab_7" data-toggle="tab">Banner Settings</a></li>
-                        <li><a href="#tab_9" data-toggle="tab">Payment Settings</a></li>
+
                         <li><a href="#tab_10" data-toggle="tab">Head & Body Scripts</a></li>
                        <!--<li><a href="#tab_11" data-toggle="tab">Ads</a></li>-->
                     </ul>
@@ -1723,49 +1717,7 @@ foreach ($result as $row) {
 
 
 
-                    
-<!-- PAYMENT METHODS TAB -->
 
-
-
-                        <div class="tab-pane" id="tab_9">
-                            <form class="form-horizontal" action="" method="post">
-                                <div class="box box-info">
-                                    <div class="box-body">
-                                        <div class="form-group">
-                                            <label for="" class="col-sm-2 control-label">PayPal - Business Email </label>
-                                            <div class="col-sm-5">
-                                                <input type="text" name="paypal_email" class="form-control" value="<?php echo $paypal_email; ?>">
-                                            </div>
-                                        </div>
-                                      <!-- <div class="form-group">
-                                            <label for="" class="col-sm-2 control-label">Stripe - Public Key </label>
-                                            <div class="col-sm-5">
-                                                <input type="text" name="stripe_public_key" class="form-control" value="<?php echo $stripe_public_key; ?>">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="" class="col-sm-2 control-label">Stripe - Secret Key </label>
-                                            <div class="col-sm-5">
-                                                <input type="text" name="stripe_secret_key" class="form-control" value="<?php echo $stripe_secret_key; ?>">
-                                            </div>
-                                        </div> -->
-                                        <div class="form-group">
-                                            <label for="" class="col-sm-2 control-label">Bank Information </label>
-                                            <div class="col-sm-5">
-                                                <textarea name="bank_detail" class="form-control" cols="30" rows="10"><?php echo $bank_detail; ?></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="" class="col-sm-2 control-label"></label>
-                                            <div class="col-sm-6">
-                                                <button type="submit" class="btn btn-success pull-left" name="form9">Update</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
 
 
                         <div class="tab-pane" id="tab_10">

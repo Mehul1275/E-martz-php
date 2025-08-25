@@ -50,26 +50,35 @@ if(isset($_POST['form1'])) {
         $error_message .= 'You must have to select a featured photo<br>';
     }
     if($valid == 1) {
-        $statement = $pdo->prepare("SHOW TABLE STATUS LIKE 'tbl_product'");
-        $statement->execute();
-        $result = $statement->fetchAll();
-        foreach($result as $row) {
-            $ai_id=$row[10];
-        }
-        if( isset($_FILES['photo']["name"]) && isset($_FILES['photo']["tmp_name"]) ) {
-            $photo = array();
+
+    	// Get the next auto-increment ID more reliably
+    	$statement = $pdo->prepare("SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'tbl_product'");
+		$statement->execute();
+		$result = $statement->fetchAll();
+		$ai_id = 1; // Default fallback
+		if(!empty($result)) {
+			$ai_id = $result[0]['AUTO_INCREMENT'];
+		}
+
+    	if( isset($_FILES['photo']["name"]) && isset($_FILES['photo']["tmp_name"]) )
+        {
+        	$photo = array();
             $photo = $_FILES['photo']["name"];
             $photo = array_values(array_filter($photo));
-            $photo_temp = array();
+
+        	$photo_temp = array();
             $photo_temp = $_FILES['photo']["tmp_name"];
             $photo_temp = array_values(array_filter($photo_temp));
-            $statement = $pdo->prepare("SHOW TABLE STATUS LIKE 'tbl_product_photo'");
-            $statement->execute();
-            $result = $statement->fetchAll();
-            foreach($result as $row) {
-                $next_id1=$row[10];
-            }
-            $z = $next_id1;
+
+        	// Get next ID for product photos more reliably
+        	$statement = $pdo->prepare("SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'tbl_product_photo'");
+			$statement->execute();
+			$result = $statement->fetchAll();
+			$next_id1 = 1; // Default fallback
+			if(!empty($result)) {
+				$next_id1 = $result[0]['AUTO_INCREMENT'];
+			}
+			$z = $next_id1;
             $m=0;
             for($i=0;$i<count($photo);$i++) {
                 $my_ext1 = pathinfo( $photo[$i], PATHINFO_EXTENSION );
@@ -87,7 +96,9 @@ if(isset($_POST['form1'])) {
                 }
             }
         }
-        $final_name = 'product-featured-'.$ai_id.'.'.$ext;
+        // Generate unique image name with timestamp to prevent conflicts
+        $timestamp = time();
+        $final_name = 'product-featured-'.$ai_id.'-'.$timestamp.'.'.$ext;
         move_uploaded_file( $path_tmp, 'assets/uploads/'.$final_name );
         $statement = $pdo->prepare("INSERT INTO tbl_product(
             p_name,

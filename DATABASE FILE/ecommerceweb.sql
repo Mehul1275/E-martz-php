@@ -1508,7 +1508,7 @@ INSERT INTO `tbl_settings` (`id`, `logo`, `favicon`, `footer_about`, `footer_cop
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_shipping_cost`
+-- Table structure for table `tbl_shipping_cost`  
 --
 
 CREATE TABLE `tbl_shipping_cost` (

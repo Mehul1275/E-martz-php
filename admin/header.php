@@ -150,12 +150,7 @@ if(!isset($_SESSION['user'])) {
         </a>
     </li>
 
-    <!-- 6. Payment -->
-    <li class="treeview <?php if( ($cur_page == 'payments.php') ) {echo 'active';} ?>">
-      <a href="payments.php">
-        <i class="fa fa-credit-card"></i> <span>View Payments</span>
-      </a>
-    </li>
+
 
     <!-- 7. Registered Customer -->
     <li class="treeview <?php if( (

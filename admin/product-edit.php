@@ -51,7 +51,6 @@ if(isset($_POST['form1'])) {
 
     	if( isset($_FILES['photo']["name"]) && isset($_FILES['photo']["tmp_name"]) )
         {
-
         	$photo = array();
             $photo = $_FILES['photo']["name"];
             $photo = array_values(array_filter($photo));
@@ -60,11 +59,13 @@ if(isset($_POST['form1'])) {
             $photo_temp = $_FILES['photo']["tmp_name"];
             $photo_temp = array_values(array_filter($photo_temp));
 
-        	$statement = $pdo->prepare("SHOW TABLE STATUS LIKE 'tbl_product_photo'");
+        	// Get next ID for product photos more reliably
+        	$statement = $pdo->prepare("SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'tbl_product_photo'");
 			$statement->execute();
 			$result = $statement->fetchAll();
-			foreach($result as $row) {
-				$next_id1=$row[10];
+			$next_id1 = 1; // Default fallback
+			if(!empty($result)) {
+				$next_id1 = $result[0]['AUTO_INCREMENT'];
 			}
 			$z = $next_id1;
 
@@ -90,6 +91,7 @@ if(isset($_POST['form1'])) {
         }
 
         if($path == '') {
+        	// No new image uploaded - only update other fields
         	$statement = $pdo->prepare("UPDATE tbl_product SET 
         							p_name=?, 
         							p_old_price=?, 
@@ -121,10 +123,24 @@ if(isset($_POST['form1'])) {
         							$_REQUEST['id']
         						));
         } else {
+        	// New image uploaded - handle image update safely
+        	// First, get the current image name to safely delete it
+        	$statement = $pdo->prepare("SELECT p_featured_photo FROM tbl_product WHERE p_id=?");
+        	$statement->execute(array($_REQUEST['id']));
+        	$current_image_result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        	$current_image = '';
+        	foreach($current_image_result as $row) {
+        		$current_image = $row['p_featured_photo'];
+        	}
+        	
+        	// Delete the old image file if it exists and is different from the new one
+        	if($current_image != '' && file_exists('../assets/uploads/'.$current_image)) {
+        		unlink('../assets/uploads/'.$current_image);
+        	}
 
-        	unlink('../assets/uploads/'.$_POST['current_photo']);
-
-			$final_name = 'product-featured-'.$_REQUEST['id'].'.'.$ext;
+        	// Generate unique image name with timestamp to prevent conflicts
+        	$timestamp = time();
+			$final_name = 'product-featured-'.$_REQUEST['id'].'-'.$timestamp.'.'.$ext;
         	move_uploaded_file( $path_tmp, '../assets/uploads/'.$final_name );
 
 
