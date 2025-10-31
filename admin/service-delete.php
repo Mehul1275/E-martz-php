@@ -1,3 +1,11 @@
+<?php
+/*
+=== SERVICE DELETE PAGE - COMMENTED OUT ===
+This file has been disabled as the services functionality has been removed from the website.
+To re-enable, uncomment all the code below.
+*/
+
+/*
 <?php require_once('header.php'); ?>
 
 <?php
@@ -37,3 +45,4 @@ if(!isset($_REQUEST['id'])) {
 
 	header('location: service.php');
 ?>
+*/

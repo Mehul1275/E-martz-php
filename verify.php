@@ -50,17 +50,12 @@ if(isset($_REQUEST['key']))
 }
 ?>
 
-<div class="page-banner" style="background-color:#444;">
-    <div class="inner">
-        <h1><?php echo $page_title; ?></h1>
-    </div>
-</div>
-
-<div class="page">
+<div class="page" style="padding-top: 25px;">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="user-content">
+                    <h1 class="simple-page-title"><?php echo $page_title; ?></h1>
                     <?php 
                         if($error_message != '') {
                             echo "<div class='error' style='padding: 10px;background:#f1f1f1;margin-bottom:20px;'>".$error_message."</div>";

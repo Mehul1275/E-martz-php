@@ -8,9 +8,16 @@ if( !isset($_REQUEST['id']) || !isset($_REQUEST['task']) ) {
 	// Check the id is valid or not
 	$statement = $pdo->prepare("SELECT * FROM tbl_payment WHERE id=?");
 	$statement->execute(array($_REQUEST['id']));
-	$total = $statement->rowCount();
-	if( $total == 0 ) {
+	$order = $statement->fetch(PDO::FETCH_ASSOC);
+	if( !$order ) {
 		header('location: logout.php');
+		exit;
+	}
+	
+	// Check if order is cancelled or returned - don't allow payment status updates
+	$order_status = isset($order['order_status']) ? $order['order_status'] : 'Pending';
+	if(in_array($order_status, ['Cancelled', 'Returned'])) {
+		header('location: order.php?error=cannot_update_cancelled_returned');
 		exit;
 	}
 }
@@ -23,8 +30,16 @@ if( !isset($_REQUEST['id']) || !isset($_REQUEST['task']) ) {
 	use PHPMailer\PHPMailer\PHPMailer;
 	use PHPMailer\PHPMailer\Exception;
 
-	$statement = $pdo->prepare("UPDATE tbl_payment SET payment_status=? WHERE id=?");
-	$statement->execute(array($_REQUEST['task'],$_REQUEST['id']));
+	// Update payment status and order status
+	if($_REQUEST['task'] == 'Completed') {
+		// When payment is completed, set order status to 'Confirmed'
+		$statement = $pdo->prepare("UPDATE tbl_payment SET payment_status=?, order_status='Confirmed' WHERE id=?");
+		$statement->execute(array($_REQUEST['task'],$_REQUEST['id']));
+	} else {
+		// For other payment status updates
+		$statement = $pdo->prepare("UPDATE tbl_payment SET payment_status=? WHERE id=?");
+		$statement->execute(array($_REQUEST['task'],$_REQUEST['id']));
+	}
 
 	// Automatic email when payment marked complete
 	if ($_REQUEST['task'] == 'Completed') {

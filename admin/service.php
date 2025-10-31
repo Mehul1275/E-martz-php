@@ -1,3 +1,11 @@
+<?php
+/*
+=== SERVICE MANAGEMENT PAGE - COMMENTED OUT ===
+This file has been disabled as the services functionality has been removed from the website.
+To re-enable, uncomment all the code below.
+*/
+
+/*
 <?php require_once('header.php'); ?>
 
 <section class="content-header">
@@ -38,7 +46,7 @@
 									<td style="width:130px;"><img src="../assets/uploads/<?php echo $row['photo']; ?>" alt="<?php echo $row['title']; ?>" style="width:120px;"></td>
 									<td><?php echo $row['title']; ?></td>
 									<td><?php echo $row['content']; ?></td>
-									<td>										
+									<td>											
 										<a href="service-edit.php?id=<?php echo $row['id']; ?>" class="btn btn-primary btn-xs">Edit</a>
 										<a href="#" class="btn btn-danger btn-xs" data-href="service-delete.php?id=<?php echo $row['id']; ?>" data-toggle="modal" data-target="#confirm-delete">Delete</a>  
 									</td>
@@ -60,7 +68,7 @@
 <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modern-page-header fade-in" style="margin-top: -40px;">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title" id="myModalLabel">Delete Confirmation</h4>
             </div>
@@ -77,3 +85,4 @@
 
 
 <?php require_once('footer.php'); ?>
+*/

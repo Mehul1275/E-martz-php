@@ -2,7 +2,9 @@
 
 <?php
 if(isset($_POST['form1'])) {
+	$valid = 1;
 
+	// updating the database
 	$statement = $pdo->prepare("UPDATE tbl_social SET social_url=? WHERE social_name=?");
 	$statement->execute(array($_POST['facebook'],'Facebook'));
 
@@ -12,11 +14,11 @@ if(isset($_POST['form1'])) {
 	$statement = $pdo->prepare("UPDATE tbl_social SET social_url=? WHERE social_name=?");
 	$statement->execute(array($_POST['linkedin'],'LinkedIn'));
 
-	$statement = $pdo->prepare("UPDATE tbl_social SET social_url=? WHERE social_name=?");
-	$statement->execute(array($_POST['googleplus'],'Google Plus'));
+	// $statement = $pdo->prepare("UPDATE tbl_social SET social_url=? WHERE social_name=?");
+	// $statement->execute(array($_POST['google_plus'],'Google Plus'));
 
-	$statement = $pdo->prepare("UPDATE tbl_social SET social_url=? WHERE social_name=?");
-	$statement->execute(array($_POST['pinterest'],'Pinterest'));
+	// $statement = $pdo->prepare("UPDATE tbl_social SET social_url=? WHERE social_name=?");
+	// $statement->execute(array($_POST['pinterest'],'Pinterest'));
 
 	$statement = $pdo->prepare("UPDATE tbl_social SET social_url=? WHERE social_name=?");
 	$statement->execute(array($_POST['youtube'],'YouTube'));
@@ -24,225 +26,349 @@ if(isset($_POST['form1'])) {
 	$statement = $pdo->prepare("UPDATE tbl_social SET social_url=? WHERE social_name=?");
 	$statement->execute(array($_POST['instagram'],'Instagram'));
 
-	$statement = $pdo->prepare("UPDATE tbl_social SET social_url=? WHERE social_name=?");
-	$statement->execute(array($_POST['tumblr'],'Tumblr'));
+	// $statement = $pdo->prepare("UPDATE tbl_social SET social_url=? WHERE social_name=?");
+	// $statement->execute(array($_POST['tumblr'],'Tumblr'));
 
-	$statement = $pdo->prepare("UPDATE tbl_social SET social_url=? WHERE social_name=?");
-	$statement->execute(array($_POST['flickr'],'Flickr'));
+	// $statement = $pdo->prepare("UPDATE tbl_social SET social_url=? WHERE social_name=?");
+	// $statement->execute(array($_POST['flickr'],'Flickr'));
 
-	$statement = $pdo->prepare("UPDATE tbl_social SET social_url=? WHERE social_name=?");
-	$statement->execute(array($_POST['reddit'],'Reddit'));
+	// $statement = $pdo->prepare("UPDATE tbl_social SET social_url=? WHERE social_name=?");
+	// $statement->execute(array($_POST['reddit'],'Reddit'));
 
-	$statement = $pdo->prepare("UPDATE tbl_social SET social_url=? WHERE social_name=?");
-	$statement->execute(array($_POST['snapchat'],'Snapchat'));
+	// $statement = $pdo->prepare("UPDATE tbl_social SET social_url=? WHERE social_name=?");
+	// $statement->execute(array($_POST['snapchat'],'Snapchat'));
 
 	$statement = $pdo->prepare("UPDATE tbl_social SET social_url=? WHERE social_name=?");
 	$statement->execute(array($_POST['whatsapp'],'WhatsApp'));
 
-	$statement = $pdo->prepare("UPDATE tbl_social SET social_url=? WHERE social_name=?");
-	$statement->execute(array($_POST['quora'],'Quora'));
-
-	$statement = $pdo->prepare("UPDATE tbl_social SET social_url=? WHERE social_name=?");
-	$statement->execute(array($_POST['stumbleupon'],'StumbleUpon'));
-
-	$statement = $pdo->prepare("UPDATE tbl_social SET social_url=? WHERE social_name=?");
-	$statement->execute(array($_POST['delicious'],'Delicious'));
-
-	$statement = $pdo->prepare("UPDATE tbl_social SET social_url=? WHERE social_name=?");
-	$statement->execute(array($_POST['digg'],'Digg'));
-
-	$success_message = 'Social Media URLs are updated successfully.';
-
+	$success_message = 'Social Media Information is updated successfully.';
 }
 ?>
 
-<section class="content-header">
-	<div class="content-header-left">
-		<h1>Social Media</h1>
-	</div>
-</section>
+<?php
+// Initialize variables
+$facebook = $twitter = $linkedin = $google_plus = $pinterest = $youtube = '';
+$instagram = $tumblr = $flickr = $reddit = $snapchat = $whatsapp = '';
+
+// Get social media URLs from database
+$statement = $pdo->prepare("SELECT social_name, social_url FROM tbl_social");
+$statement->execute();
+$result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+foreach ($result as $row) {
+	switch($row['social_name']) {
+		case 'Facebook': $facebook = $row['social_url']; break;
+		case 'Twitter': $twitter = $row['social_url']; break;
+		case 'LinkedIn': $linkedin = $row['social_url']; break;
+		case 'Google Plus': $google_plus = $row['social_url']; break;
+		case 'Pinterest': $pinterest = $row['social_url']; break;
+		case 'YouTube': $youtube = $row['social_url']; break;
+		case 'Instagram': $instagram = $row['social_url']; break;
+		case 'Tumblr': $tumblr = $row['social_url']; break;
+		case 'Flickr': $flickr = $row['social_url']; break;
+		case 'Reddit': $reddit = $row['social_url']; break;
+		case 'Snapchat': $snapchat = $row['social_url']; break;
+		case 'WhatsApp': $whatsapp = $row['social_url']; break;
+	}
+}
+?>
+
+<style>
+.modern-page-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.modern-page-header h1 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.modern-page-header .subtitle {
+    margin-top: 0.5rem;
+    opacity: 0.9;
+    font-size: 1.1rem;
+}
+
+.modern-form-container {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    border: 1px solid #e3e6f0;
+}
+
+.social-media-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 1.5rem;
+    padding: 2rem;
+}
+
+.social-input-group {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: #f8f9fc;
+    border-radius: 10px;
+    border: 2px solid #e3e6f0;
+    transition: all 0.3s ease;
+}
+
+.social-input-group:hover {
+    border-color: #667eea;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);
+}
+
+.social-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.social-icon.facebook { background: linear-gradient(135deg, #1877f2, #166fe5); }
+.social-icon.twitter { background: linear-gradient(135deg, #1da1f2, #0d8bd9); }
+.social-icon.linkedin { background: linear-gradient(135deg, #0077b5, #005885); }
+.social-icon.google-plus { background: linear-gradient(135deg, #dd4b39, #c23321); }
+.social-icon.pinterest { background: linear-gradient(135deg, #bd081c, #8c0613); }
+.social-icon.youtube { background: linear-gradient(135deg, #ff0000, #cc0000); }
+.social-icon.instagram { background: linear-gradient(135deg, #e4405f, #833ab4); }
+.social-icon.tumblr { background: linear-gradient(135deg, #00cf35, #00a82d); }
+.social-icon.flickr { background: linear-gradient(135deg, #ff0084, #cc006a); }
+.social-icon.reddit { background: linear-gradient(135deg, #ff4500, #cc3700); }
+.social-icon.snapchat { background: linear-gradient(135deg, #fffc00, #ccca00); }
+.social-icon.whatsapp { background: linear-gradient(135deg, #25d366, #1da851); }
+
+.social-input {
+    flex: 1;
+    padding: 0.8rem 1rem;
+    border: none;
+    background: white;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.social-input:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.social-label {
+    font-weight: 600;
+    color: #2c3e50;
+    min-width: 100px;
+}
+
+.modern-alert {
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+}
+
+.modern-alert.success {
+    background: linear-gradient(135deg, #d4edda, #c3e6cb);
+    color: #155724;
+    border-left: 4px solid #28a745;
+}
+
+.modern-alert.error {
+    background: linear-gradient(135deg, #f8d7da, #f1b0b7);
+    color: #721c24;
+    border-left: 4px solid #dc3545;
+}
+
+.modern-btn {
+    background: linear-gradient(135deg, #1cc88a, #17a673);
+    color: white;
+    padding: 0.8rem 2rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.modern-btn:hover {
+    background: linear-gradient(135deg, #17a673, #138f5f);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(28, 200, 138, 0.3);
+    color: white;
+    text-decoration: none;
+}
+
+.form-actions {
+    padding: 2rem;
+    background: #f8f9fc;
+    border-top: 1px solid #e3e6f0;
+    text-align: center;
+}
+
+.fade-in {
+    animation: fadeIn 0.6s ease-out;
+}
+
+.slide-in {
+    animation: slideIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+</style>
+
+<div class="modern-page-header fade-in" style="margin-top: -40px;">
+    <h1>
+        <i class="fa fa-share-alt"></i>
+        Social Media Settings
+    </h1>
+    <div class="subtitle">Configure social media links and integration settings</div>
+</div>
 
 <?php
-$statement = $pdo->prepare("SELECT * FROM tbl_social");
-$statement->execute();
-$result = $statement->fetchAll(PDO::FETCH_ASSOC);							
-foreach ($result as $row) {
-	if($row['social_name'] == 'Facebook') {
-		$facebook = $row['social_url'];
-	}
-	if($row['social_name'] == 'Twitter') {
-		$twitter = $row['social_url'];
-	}
-	if($row['social_name'] == 'LinkedIn') {
-		$linkedin = $row['social_url'];
-	}
-	if($row['social_name'] == 'Google Plus') {
-		$googleplus = $row['social_url'];
-	}
-	if($row['social_name'] == 'Pinterest') {
-		$pinterest = $row['social_url'];
-	}
-	if($row['social_name'] == 'YouTube') {
-		$youtube = $row['social_url'];
-	}
-	if($row['social_name'] == 'Instagram') {
-		$instagram = $row['social_url'];
-	}
-	if($row['social_name'] == 'Tumblr') {
-		$tumblr = $row['social_url'];
-	}
-	if($row['social_name'] == 'Flickr') {
-		$flickr = $row['social_url'];
-	}
-	if($row['social_name'] == 'Reddit') {
-		$reddit = $row['social_url'];
-	}
-	if($row['social_name'] == 'Snapchat') {
-		$snapchat = $row['social_url'];
-	}
-	if($row['social_name'] == 'WhatsApp') {
-		$whatsapp = $row['social_url'];
-	}
-	if($row['social_name'] == 'Quora') {
-		$quora = $row['social_url'];
-	}
-	if($row['social_name'] == 'StumbleUpon') {
-		$stumbleupon = $row['social_url'];
-	}
-	if($row['social_name'] == 'Delicious') {
-		$delicious = $row['social_url'];
-	}
-	if($row['social_name'] == 'Digg') {
-		$digg = $row['social_url'];
-	}
+if($error_message != '') {
+	echo "<div class='modern-alert error'><i class='fa fa-exclamation-triangle'></i> ".$error_message."</div>";
+}
+if($success_message != '') {
+	echo "<div class='modern-alert success'><i class='fa fa-check-circle'></i> ".$success_message."</div>";
 }
 ?>
 
 <section class="content">
 	<div class="row">
 		<div class="col-md-12">
-
-			<?php if($error_message): ?>
-			<div class="callout callout-danger">
-				<p>
-					<?php echo $error_message; ?>
-				</p>
-			</div>
-			<?php endif; ?>
-
-			<?php if($success_message): ?>
-			<div class="callout callout-success">
-				<p><?php echo $success_message; ?></p>
-			</div>
-			<?php endif; ?>
-			
 			<form class="form-horizontal" action="" method="post">
-				<div class="box box-info">
-					<div class="box-body">						
-						<p style="padding-bottom: 20px;">If you do not want to show a social media in your front end page, just leave the input field blank.</p>
+				<div class="modern-form-container slide-in">
+					<div class="social-media-grid">
+						<div class="social-input-group">
+							<div class="social-icon facebook">
+								<i class="fa fa-facebook"></i>
+							</div>
+							<div class="social-label">Facebook</div>
+							<input type="text" class="social-input" name="facebook" value="<?php echo htmlspecialchars($facebook); ?>" placeholder="https://facebook.com/yourpage">
+						</div>
 
-						<div class="form-group">
-							<label for="" class="col-sm-2 control-label">Facebook </label>
-							<div class="col-sm-4">
-								<input type="text" class="form-control" name="facebook" value="<?php echo $facebook; ?>">
+						<div class="social-input-group">
+							<div class="social-icon twitter">
+								<i class="fa fa-twitter"></i>
 							</div>
+							<div class="social-label">Twitter</div>
+							<input type="text" class="social-input" name="twitter" value="<?php echo htmlspecialchars($twitter); ?>" placeholder="https://twitter.com/youraccount">
 						</div>
-						<div class="form-group">
-							<label for="" class="col-sm-2 control-label">Twitter </label>
-							<div class="col-sm-4">
-								<input type="text" class="form-control" name="twitter" value="<?php echo $twitter; ?>">
+
+						<div class="social-input-group">
+							<div class="social-icon linkedin">
+								<i class="fa fa-linkedin"></i>
 							</div>
+							<div class="social-label">LinkedIn</div>
+							<input type="text" class="social-input" name="linkedin" value="<?php echo htmlspecialchars($linkedin); ?>" placeholder="https://linkedin.com/company/yourcompany">
 						</div>
-						<div class="form-group">
-							<label for="" class="col-sm-2 control-label">LinkedIn </label>
-							<div class="col-sm-4">
-								<input type="text" class="form-control" name="linkedin" value="<?php echo $linkedin; ?>">
+<!-- 
+						<div class="social-input-group">
+							<div class="social-icon google-plus">
+								<i class="fa fa-google-plus"></i>
 							</div>
+							<div class="social-label">Google Plus</div>
+							<input type="text" class="social-input" name="google_plus" value="<?php echo htmlspecialchars($google_plus); ?>" placeholder="https://plus.google.com/youraccount">
 						</div>
-						<!-- <div class="form-group">
-							<label for="" class="col-sm-2 control-label">Google Plus </label>
-							<div class="col-sm-4">
-								<input type="text" class="form-control" name="googleplus" value="<?php echo $googleplus; ?>">
+
+						<div class="social-input-group">
+							<div class="social-icon pinterest">
+								<i class="fa fa-pinterest"></i>
 							</div>
+							<div class="social-label">Pinterest</div>
+							<input type="text" class="social-input" name="pinterest" value="<?php echo htmlspecialchars($pinterest); ?>" placeholder="https://pinterest.com/youraccount">
 						</div> -->
-						<!-- <div class="form-group">
-							<label for="" class="col-sm-2 control-label">Pinterest </label>
-							<div class="col-sm-4">
-								<input type="text" class="form-control" name="pinterest" value="<?php echo $pinterest; ?>">
+
+						<div class="social-input-group">
+							<div class="social-icon youtube">
+								<i class="fa fa-youtube"></i>
 							</div>
+							<div class="social-label">YouTube</div>
+							<input type="text" class="social-input" name="youtube" value="<?php echo htmlspecialchars($youtube); ?>" placeholder="https://youtube.com/c/yourchannel">
+						</div>
+
+						<div class="social-input-group">
+							<div class="social-icon instagram">
+								<i class="fa fa-instagram"></i>
+							</div>
+							<div class="social-label">Instagram</div>
+							<input type="text" class="social-input" name="instagram" value="<?php echo htmlspecialchars($instagram); ?>" placeholder="https://instagram.com/youraccount">
+						</div>
+<!-- 
+						<div class="social-input-group">
+							<div class="social-icon tumblr">
+								<i class="fa fa-tumblr"></i>
+							</div>
+							<div class="social-label">Tumblr</div>
+							<input type="text" class="social-input" name="tumblr" value="<?php echo htmlspecialchars($tumblr); ?>" placeholder="https://youraccount.tumblr.com">
+						</div>
+
+						<div class="social-input-group">
+							<div class="social-icon flickr">
+								<i class="fa fa-flickr"></i>
+							</div>
+							<div class="social-label">Flickr</div>
+							<input type="text" class="social-input" name="flickr" value="<?php echo htmlspecialchars($flickr); ?>" placeholder="https://flickr.com/photos/youraccount">
+						</div>
+
+						<div class="social-input-group">
+							<div class="social-icon reddit">
+								<i class="fa fa-reddit"></i>
+							</div>
+							<div class="social-label">Reddit</div>
+							<input type="text" class="social-input" name="reddit" value="<?php echo htmlspecialchars($reddit); ?>" placeholder="https://reddit.com/u/youraccount">
+						</div>
+
+						<div class="social-input-group">
+							<div class="social-icon snapchat">
+								<i class="fa fa-snapchat"></i>
+							</div>
+							<div class="social-label">Snapchat</div>
+							<input type="text" class="social-input" name="snapchat" value="<?php echo htmlspecialchars($snapchat); ?>" placeholder="https://snapchat.com/add/youraccount">
 						</div> -->
-						<div class="form-group">
-							<label for="" class="col-sm-2 control-label">YouTube </label>
-							<div class="col-sm-4">
-								<input type="text" class="form-control" name="youtube" value="<?php echo $youtube; ?>">
+
+						<div class="social-input-group">
+							<div class="social-icon whatsapp">
+								<i class="fa fa-whatsapp"></i>
 							</div>
+							<div class="social-label">WhatsApp</div>
+							<input type="text" class="social-input" name="whatsapp" value="<?php echo htmlspecialchars($whatsapp); ?>" placeholder="https://wa.me/yournumber">
 						</div>
-						<div class="form-group">
-							<label for="" class="col-sm-2 control-label">Instagram </label>
-							<div class="col-sm-4">
-								<input type="text" class="form-control" name="instagram" value="<?php echo $instagram; ?>">
-							</div>
-						</div>
-						<!-- <div class="form-group">
-							<label for="" class="col-sm-2 control-label">Tumblr </label>
-							<div class="col-sm-4">
-								<input type="text" class="form-control" name="tumblr" value="<?php echo $tumblr; ?>">
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="" class="col-sm-2 control-label">Flickr </label>
-							<div class="col-sm-4">
-								<input type="text" class="form-control" name="flickr" value="<?php echo $flickr; ?>">
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="" class="col-sm-2 control-label">Reddit </label>
-							<div class="col-sm-4">
-								<input type="text" class="form-control" name="reddit" value="<?php echo $reddit; ?>">
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="" class="col-sm-2 control-label">Snapchat </label>
-							<div class="col-sm-4">
-								<input type="text" class="form-control" name="snapchat" value="<?php echo $snapchat; ?>">
-							</div>
-						</div> -->
-						<div class="form-group">
-							<label for="" class="col-sm-2 control-label">WhatsApp </label>
-							<div class="col-sm-4">
-								<input type="text" class="form-control" name="whatsapp" value="<?php echo $whatsapp; ?>">
-							</div>
-						</div>
-						<!-- <div class="form-group">
-							<label for="" class="col-sm-2 control-label">Quora </label>
-							<div class="col-sm-4">
-								<input type="text" class="form-control" name="quora" value="<?php echo $quora; ?>">
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="" class="col-sm-2 control-label">StumbleUpon </label>
-							<div class="col-sm-4">
-								<input type="text" class="form-control" name="stumbleupon" value="<?php echo $stumbleupon; ?>">
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="" class="col-sm-2 control-label">Delicious </label>
-							<div class="col-sm-4">
-								<input type="text" class="form-control" name="delicious" value="<?php echo $delicious; ?>">
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="" class="col-sm-2 control-label">Digg </label>
-							<div class="col-sm-4">
-								<input type="text" class="form-control" name="digg" value="<?php echo $digg; ?>">
-							</div>
-						</div> -->
-						<div class="form-group">
-							<label for="" class="col-sm-2 control-label"></label>
-							<div class="col-sm-6">
-								<button type="submit" class="btn btn-success pull-left" name="form1">Submit</button>
-							</div>
-						</div>
+					</div>
+
+					<div class="form-actions">
+						<button type="submit" class="modern-btn" name="form1">
+							<i class="fa fa-save"></i> Update Social Media Settings
+						</button>
+					</div>
 					</div>
 				</div>
 			</form>

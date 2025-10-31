@@ -3,6 +3,12 @@
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 body {
@@ -136,6 +142,8 @@ a:hover {
   width: 100%;
   height: auto;
   background: #fff;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .header .inner {
@@ -2157,14 +2165,40 @@ div.pagination span.disabled {
   border: 2px solid #e74c3c;
   border-radius: 50%;
   background: #fff;
-  padding: 2px 4px 2px 4px;
+  padding: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  box-sizing: border-box;
 }
 .wishlist-heart.active {
-  color: #fff;
-  background: #e74c3c;
-  border: 2px solid #e74c3c;
+  color: #fff !important;
+  background: #e74c3c !important;
+  border: 2px solid #e74c3c !important;
+  width: 32px;
+  height: 32px;
+  padding: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 .wishlist-heart:hover {
   color: #fff;
   background: #e74c3c;
+}
+
+.simple-page-title {
+  margin: 0 0 22px 0;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: #232f3e;
+  letter-spacing: 0.2px;
+}
+
+.simple-page-title + .breadcrumb,
+.page .simple-page-title + h3.special {
+  margin-top: 6px;
 }

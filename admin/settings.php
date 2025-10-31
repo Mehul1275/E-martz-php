@@ -1,5 +1,370 @@
 <?php require_once('header.php'); ?>
 
+<style>
+.modern-page-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.modern-page-header h1 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.modern-page-header .subtitle {
+    margin-top: 0.5rem;
+    opacity: 0.9;
+    font-size: 1.1rem;
+}
+
+.modern-tabs-container {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    border: 1px solid #e3e6f0;
+    margin-bottom: 2rem;
+}
+
+.modern-tabs-nav {
+    background: linear-gradient(135deg, #f8f9fc 0%, #e9ecef 100%);
+    border-bottom: 2px solid #e3e6f0;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.modern-tab-btn {
+    background: none;
+    border: none;
+    padding: 1rem 1.5rem;
+    color: #5a5c69;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.modern-tab-btn:hover {
+    background: rgba(102, 126, 234, 0.1);
+    color: #667eea;
+}
+
+.modern-tab-btn.active {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    font-weight: 600;
+}
+
+.modern-tabs-content {
+    background: white;
+}
+
+.modern-tab-pane {
+    display: none;
+    padding: 2rem;
+}
+
+.modern-tab-pane.active {
+    display: block;
+}
+
+.tab-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #e3e6f0;
+}
+
+.tab-header h3 {
+    margin: 0 0 0.5rem 0;
+    color: #2c3e50;
+    font-size: 1.5rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.tab-header p {
+    margin: 0;
+    color: #7f8c8d;
+    font-size: 1rem;
+}
+
+.settings-section {
+    margin-bottom: 2rem;
+    background: #f8f9fc;
+    border-radius: 8px;
+    padding: 1.5rem;
+    border: 1px solid #e3e6f0;
+}
+
+.settings-section h4 {
+    margin: 0 0 1rem 0;
+    color: #2c3e50;
+    font-size: 1.2rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.form-card {
+    background: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    border: 1px solid #e3e6f0;
+}
+
+.form-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.form-group {
+    flex: 1;
+    min-width: 250px;
+}
+
+.form-label {
+    display: block;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.modern-form-control {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid #e3e6f0;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.modern-form-control:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.modern-textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.form-text {
+    font-size: 0.8rem;
+    color: #6c757d;
+    margin-top: 0.25rem;
+    line-height: 1.4;
+}
+
+.form-actions {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e3e6f0;
+}
+
+.modern-btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.modern-btn-primary {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+}
+
+.modern-btn-primary:hover {
+    background: linear-gradient(135deg, #5a67d8, #6b46c1);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+    color: white;
+    text-decoration: none;
+}
+
+.modern-btn-info {
+    background: linear-gradient(135deg, #36b9cc, #258391);
+    color: white;
+}
+
+.modern-btn-info:hover {
+    background: linear-gradient(135deg, #258391, #1e6b73);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(54, 185, 204, 0.3);
+    color: white;
+    text-decoration: none;
+}
+
+.modern-alert {
+    border-radius: 8px;
+    border: none;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.modern-alert-success {
+    background: linear-gradient(135deg, #d4edda, #c3e6cb);
+    color: #155724;
+    border-left: 4px solid #28a745;
+}
+
+.modern-alert-danger {
+    background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+    color: #721c24;
+    border-left: 4px solid #dc3545;
+}
+
+.alert-content {
+    flex: 1;
+}
+
+.alert-content strong {
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.logo-preview, .favicon-preview {
+    padding: 1rem;
+    background: #f8f9fc;
+    border: 2px dashed #e3e6f0;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.current-logo {
+    max-width: 200px;
+    max-height: 80px;
+    border-radius: 4px;
+}
+
+.current-favicon {
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+}
+
+.file-upload-wrapper {
+    position: relative;
+    border: 2px dashed #e3e6f0;
+    border-radius: 8px;
+    padding: 2rem;
+    text-align: center;
+    background: #f8f9fc;
+    transition: all 0.3s ease;
+}
+
+.file-upload-wrapper:hover {
+    border-color: #667eea;
+    background: rgba(102, 126, 234, 0.05);
+}
+
+.modern-file-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.file-upload-info {
+    pointer-events: none;
+    color: #5a5c69;
+}
+
+.file-upload-info i {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: #667eea;
+}
+
+/* Animation keyframes */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Animation classes */
+.fade-in {
+    animation: fadeIn 0.6s ease-out;
+}
+
+.slide-in {
+    animation: slideIn 0.8s ease-out;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .modern-tabs-nav {
+        flex-direction: column;
+    }
+    
+    .modern-tab-btn {
+        padding: 0.75rem 1rem;
+    }
+    
+    .modern-tab-pane {
+        padding: 1rem;
+    }
+    
+    .form-row {
+        flex-direction: column;
+    }
+    
+    .form-group {
+        min-width: auto;
+    }
+}
+</style>
+
 <?php
 //Change Logo
 if(isset($_POST['form1'])) {
@@ -364,383 +729,8 @@ if(isset($_POST['form6_3'])) {
  
 }
 
-if(isset($_POST['form7_1'])) {
-    $valid = 1;
+// Removed: All Banner upload handlers and seller banner handlers
 
-    $path = $_FILES['photo']['name'];
-    $path_tmp = $_FILES['photo']['tmp_name'];
-
-    if($path == '') {
-        $valid = 0;
-        $error_message .= 'You must have to select a photo<br>';
-    } else {
-        $ext = pathinfo( $path, PATHINFO_EXTENSION );
-        $file_name = basename( $path, '.' . $ext );
-        if( $ext!='jpg' && $ext!='png' && $ext!='jpeg' && $ext!='gif' ) {
-            $valid = 0;
-            $error_message .= 'You must have to upload jpg, jpeg, gif or png file<br>';
-        }
-    }
-
-    if($valid == 1) {
-        // removing the existing photo
-        $statement = $pdo->prepare("SELECT * FROM tbl_settings WHERE id=1");
-        $statement->execute();
-        $result = $statement->fetchAll(PDO::FETCH_ASSOC);                           
-        foreach ($result as $row) {
-            $banner_login = $row['banner_login'];
-            unlink('../assets/uploads/'.$banner_login);
-        }
-
-        // updating the data
-        $final_name = 'banner_login'.'.'.$ext;
-        move_uploaded_file( $path_tmp, '../assets/uploads/'.$final_name );
-
-        // updating the database
-        $statement = $pdo->prepare("UPDATE tbl_settings SET banner_login=? WHERE id=1");
-        $statement->execute(array($final_name));
-
-        $success_message = 'Login Page Banner is updated successfully.';
-        
-    }
-}
-
-if(isset($_POST['form7_2'])) {
-    $valid = 1;
-
-    $path = $_FILES['photo']['name'];
-    $path_tmp = $_FILES['photo']['tmp_name'];
-
-    if($path == '') {
-        $valid = 0;
-        $error_message .= 'You must have to select a photo<br>';
-    } else {
-        $ext = pathinfo( $path, PATHINFO_EXTENSION );
-        $file_name = basename( $path, '.' . $ext );
-        if( $ext!='jpg' && $ext!='png' && $ext!='jpeg' && $ext!='gif' ) {
-            $valid = 0;
-            $error_message .= 'You must have to upload jpg, jpeg, gif or png file<br>';
-        }
-    }
-
-    if($valid == 1) {
-        // removing the existing photo
-        $statement = $pdo->prepare("SELECT * FROM tbl_settings WHERE id=1");
-        $statement->execute();
-        $result = $statement->fetchAll(PDO::FETCH_ASSOC);                           
-        foreach ($result as $row) {
-            $banner_registration = $row['banner_registration'];
-            unlink('../assets/uploads/'.$banner_registration);
-        }
-
-        // updating the data
-        $final_name = 'banner_registration'.'.'.$ext;
-        move_uploaded_file( $path_tmp, '../assets/uploads/'.$final_name );
-
-        // updating the database
-        $statement = $pdo->prepare("UPDATE tbl_settings SET banner_registration=? WHERE id=1");
-        $statement->execute(array($final_name));
-
-        $success_message = 'Registration Page Banner is updated successfully.';
-        
-    }
-}
-
-if(isset($_POST['form7_3'])) {
-    $valid = 1;
-
-    $path = $_FILES['photo']['name'];
-    $path_tmp = $_FILES['photo']['tmp_name'];
-
-    if($path == '') {
-        $valid = 0;
-        $error_message .= 'You must have to select a photo<br>';
-    } else {
-        $ext = pathinfo( $path, PATHINFO_EXTENSION );
-        $file_name = basename( $path, '.' . $ext );
-        if( $ext!='jpg' && $ext!='png' && $ext!='jpeg' && $ext!='gif' ) {
-            $valid = 0;
-            $error_message .= 'You must have to upload jpg, jpeg, gif or png file<br>';
-        }
-    }
-
-    if($valid == 1) {
-        // removing the existing photo
-        $statement = $pdo->prepare("SELECT * FROM tbl_settings WHERE id=1");
-        $statement->execute();
-        $result = $statement->fetchAll(PDO::FETCH_ASSOC);                           
-        foreach ($result as $row) {
-            $banner_forget_password = $row['banner_forget_password'];
-            unlink('../assets/uploads/'.$banner_forget_password);
-        }
-
-        // updating the data
-        $final_name = 'banner_forget_password'.'.'.$ext;
-        move_uploaded_file( $path_tmp, '../assets/uploads/'.$final_name );
-
-        // updating the database
-        $statement = $pdo->prepare("UPDATE tbl_settings SET banner_forget_password=? WHERE id=1");
-        $statement->execute(array($final_name));
-
-        $success_message = 'Forget Password Page Banner is updated successfully.';
-        
-    }
-}
-
-if(isset($_POST['form7_4'])) {
-    $valid = 1;
-
-    $path = $_FILES['photo']['name'];
-    $path_tmp = $_FILES['photo']['tmp_name'];
-
-    if($path == '') {
-        $valid = 0;
-        $error_message .= 'You must have to select a photo<br>';
-    } else {
-        $ext = pathinfo( $path, PATHINFO_EXTENSION );
-        $file_name = basename( $path, '.' . $ext );
-        if( $ext!='jpg' && $ext!='png' && $ext!='jpeg' && $ext!='gif' ) {
-            $valid = 0;
-            $error_message .= 'You must have to upload jpg, jpeg, gif or png file<br>';
-        }
-    }
-
-    if($valid == 1) {
-        // removing the existing photo
-        $statement = $pdo->prepare("SELECT * FROM tbl_settings WHERE id=1");
-        $statement->execute();
-        $result = $statement->fetchAll(PDO::FETCH_ASSOC);                           
-        foreach ($result as $row) {
-            $banner_reset_password = $row['banner_reset_password'];
-            unlink('../assets/uploads/'.$banner_reset_password);
-        }
-
-        // updating the data
-        $final_name = 'banner_reset_password'.'.'.$ext;
-        move_uploaded_file( $path_tmp, '../assets/uploads/'.$final_name );
-
-        // updating the database
-        $statement = $pdo->prepare("UPDATE tbl_settings SET banner_reset_password=? WHERE id=1");
-        $statement->execute(array($final_name));
-
-        $success_message = 'Reset Password Page Banner is updated successfully.';
-        
-    }
-}
-
-
-if(isset($_POST['form7_6'])) {
-    $valid = 1;
-
-    $path = $_FILES['photo']['name'];
-    $path_tmp = $_FILES['photo']['tmp_name'];
-
-    if($path == '') {
-        $valid = 0;
-        $error_message .= 'You must have to select a photo<br>';
-    } else {
-        $ext = pathinfo( $path, PATHINFO_EXTENSION );
-        $file_name = basename( $path, '.' . $ext );
-        if( $ext!='jpg' && $ext!='png' && $ext!='jpeg' && $ext!='gif' ) {
-            $valid = 0;
-            $error_message .= 'You must have to upload jpg, jpeg, gif or png file<br>';
-        }
-    }
-
-    if($valid == 1) {
-        // removing the existing photo
-        $statement = $pdo->prepare("SELECT * FROM tbl_settings WHERE id=1");
-        $statement->execute();
-        $result = $statement->fetchAll(PDO::FETCH_ASSOC);                           
-        foreach ($result as $row) {
-            $banner_search = $row['banner_search'];
-            unlink('../assets/uploads/'.$banner_search);
-        }
-
-        // updating the data
-        $final_name = 'banner_search'.'.'.$ext;
-        move_uploaded_file( $path_tmp, '../assets/uploads/'.$final_name );
-
-        // updating the database
-        $statement = $pdo->prepare("UPDATE tbl_settings SET banner_search=? WHERE id=1");
-        $statement->execute(array($final_name));
-
-        $success_message = 'Search Page Banner is updated successfully.';
-        
-    }
-}
-
-if(isset($_POST['form7_7'])) {
-    $valid = 1;
-
-    $path = $_FILES['photo']['name'];
-    $path_tmp = $_FILES['photo']['tmp_name'];
-
-    if($path == '') {
-        $valid = 0;
-        $error_message .= 'You must have to select a photo<br>';
-    } else {
-        $ext = pathinfo( $path, PATHINFO_EXTENSION );
-        $file_name = basename( $path, '.' . $ext );
-        if( $ext!='jpg' && $ext!='png' && $ext!='jpeg' && $ext!='gif' ) {
-            $valid = 0;
-            $error_message .= 'You must have to upload jpg, jpeg, gif or png file<br>';
-        }
-    }
-
-    if($valid == 1) {
-        // removing the existing photo
-        $statement = $pdo->prepare("SELECT * FROM tbl_settings WHERE id=1");
-        $statement->execute();
-        $result = $statement->fetchAll(PDO::FETCH_ASSOC);                           
-        foreach ($result as $row) {
-            $banner_cart = $row['banner_cart'];
-            unlink('../assets/uploads/'.$banner_cart);
-        }
-
-        // updating the data
-        $final_name = 'banner_cart'.'.'.$ext;
-        move_uploaded_file( $path_tmp, '../assets/uploads/'.$final_name );
-
-        // updating the database
-        $statement = $pdo->prepare("UPDATE tbl_settings SET banner_cart=? WHERE id=1");
-        $statement->execute(array($final_name));
-
-        $success_message = 'Cart Page Banner is updated successfully.';
-        
-    }
-}
-
-if(isset($_POST['form7_8'])) {
-    $valid = 1;
-
-    $path = $_FILES['photo']['name'];
-    $path_tmp = $_FILES['photo']['tmp_name'];
-
-    if($path == '') {
-        $valid = 0;
-        $error_message .= 'You must have to select a photo<br>';
-    } else {
-        $ext = pathinfo( $path, PATHINFO_EXTENSION );
-        $file_name = basename( $path, '.' . $ext );
-        if( $ext!='jpg' && $ext!='png' && $ext!='jpeg' && $ext!='gif' ) {
-            $valid = 0;
-            $error_message .= 'You must have to upload jpg, jpeg, gif or png file<br>';
-        }
-    }
-
-    if($valid == 1) {
-        // removing the existing photo
-        $statement = $pdo->prepare("SELECT * FROM tbl_settings WHERE id=1");
-        $statement->execute();
-        $result = $statement->fetchAll(PDO::FETCH_ASSOC);                           
-        foreach ($result as $row) {
-            $banner_checkout = $row['banner_checkout'];
-            unlink('../assets/uploads/'.$banner_checkout);
-        }
-
-        // updating the data
-        $final_name = 'banner_checkout'.'.'.$ext;
-        move_uploaded_file( $path_tmp, '../assets/uploads/'.$final_name );
-
-        // updating the database
-        $statement = $pdo->prepare("UPDATE tbl_settings SET banner_checkout=? WHERE id=1");
-        $statement->execute(array($final_name));
-
-        $success_message = 'Checkout Page Banner is updated successfully.';
-        
-    }
-}
-
-if(isset($_POST['form7_9'])) {
-    $valid = 1;
-
-    $path = $_FILES['photo']['name'];
-    $path_tmp = $_FILES['photo']['tmp_name'];
-
-    if($path == '') {
-        $valid = 0;
-        $error_message .= 'You must have to select a photo<br>';
-    } else {
-        $ext = pathinfo( $path, PATHINFO_EXTENSION );
-        $file_name = basename( $path, '.' . $ext );
-        if( $ext!='jpg' && $ext!='png' && $ext!='jpeg' && $ext!='gif' ) {
-            $valid = 0;
-            $error_message .= 'You must have to upload jpg, jpeg, gif or png file<br>';
-        }
-    }
-
-    if($valid == 1) {
-        // removing the existing photo
-        $statement = $pdo->prepare("SELECT * FROM tbl_settings WHERE id=1");
-        $statement->execute();
-        $result = $statement->fetchAll(PDO::FETCH_ASSOC);                           
-        foreach ($result as $row) {
-            $banner_product_category = $row['banner_product_category'];
-            unlink('../assets/uploads/'.$banner_product_category);
-        }
-
-        // updating the data
-        $final_name = 'banner_product_category'.'.'.$ext;
-        move_uploaded_file( $path_tmp, '../assets/uploads/'.$final_name );
-
-        // updating the database
-        $statement = $pdo->prepare("UPDATE tbl_settings SET banner_product_category=? WHERE id=1");
-        $statement->execute(array($final_name));
-
-        $success_message = 'Product Category Page Banner is updated successfully.';
-        
-    }
-}
-
-if(isset($_POST['form7_10'])) {
-    $valid = 1;
-
-    $path = $_FILES['photo']['name'];
-    $path_tmp = $_FILES['photo']['tmp_name'];
-
-    if($path == '') {
-        $valid = 0;
-        $error_message .= 'You must have to select a photo<br>';
-    } else {
-        $ext = pathinfo( $path, PATHINFO_EXTENSION );
-        $file_name = basename( $path, '.' . $ext );
-        if( $ext!='jpg' && $ext!='png' && $ext!='jpeg' && $ext!='gif' ) {
-            $valid = 0;
-            $error_message .= 'You must have to upload jpg, jpeg, gif or png file<br>';
-        }
-    }
-/*
-    if($valid == 1) {
-        // removing the existing photo
-        $statement = $pdo->prepare("SELECT * FROM tbl_settings WHERE id=1");
-        $statement->execute();
-        $result = $statement->fetchAll(PDO::FETCH_ASSOC);                           
-        foreach ($result as $row) {
-            $banner_blog = $row['banner_blog'];
-            unlink('../assets/uploads/'.$banner_blog);
-        }
-
-        // updating the data
-        $final_name = 'banner_blog'.'.'.$ext;
-        move_uploaded_file( $path_tmp, '../assets/uploads/'.$final_name );
-
-        // updating the database
-        $statement = $pdo->prepare("UPDATE tbl_settings SET banner_blog=? WHERE id=1");
-        $statement->execute(array($final_name));
-
-        $success_message = 'Blog Page Banner is updated successfully.';
-        
-    } */
-}
-
-if(isset($_POST['form9'])) {
-    // updating the database
-    $statement = $pdo->prepare("UPDATE tbl_settings SET paypal_email=?, bank_detail=? WHERE id=1");
-    $statement->execute(array($_POST['paypal_email'],$_POST['bank_detail']));
-
-    $success_message = 'Payment Settings is updated successfully.';
-}
 
 if(isset($_POST['form10'])) {
     // updating the database
@@ -754,96 +744,28 @@ if(isset($_POST['form10'])) {
 if(isset($_POST['form11'])) {
     // updating the database
     $statement = $pdo->prepare("UPDATE tbl_settings 
-    						SET 
-    						ads_above_welcome_on_off=?, 
-    						ads_above_featured_product_on_off=?, 
-    						ads_above_latest_product_on_off=?, 
-    						ads_above_popular_product_on_off=?, 
-    						ads_above_testimonial_on_off=?, 
-    						ads_category_sidebar_on_off=? 
+    					SET 
+    					ads_above_welcome_on_off=?, 
+    					ads_above_featured_product_on_off=?, 
+    					ads_above_latest_product_on_off=?, 
+    					ads_above_popular_product_on_off=?, 
+    					ads_above_testimonial_on_off=?, 
+    					ads_category_sidebar_on_off=? 
 
-    						WHERE id=1");
+    					WHERE id=1");
     $statement->execute(array(
-    						$_POST['ads_above_welcome_on_off'],
-    						$_POST['ads_above_featured_product_on_off'],
-    						$_POST['ads_above_latest_product_on_off'],
-    						$_POST['ads_above_popular_product_on_off'],
-    						$_POST['ads_above_testimonial_on_off'],
-    						$_POST['ads_category_sidebar_on_off']
-    					));
+    					$_POST['ads_above_welcome_on_off'],
+    					$_POST['ads_above_featured_product_on_off'],
+    					$_POST['ads_above_latest_product_on_off'],
+    					$_POST['ads_above_popular_product_on_off'],
+    					$_POST['ads_above_testimonial_on_off'],
+    					$_POST['ads_category_sidebar_on_off']
+					));
 
     $success_message = 'Advertisement On-Off Section is updated successfully.';
 } */
-
-// Seller Login Banner
-if(isset($_POST['form7_seller_login'])) {
-    $valid = 1;
-    $path = $_FILES['photo']['name'];
-    $path_tmp = $_FILES['photo']['tmp_name'];
-    if($path == '') {
-        $valid = 0;
-        $error_message .= 'You must have to select a photo<br>';
-    } else {
-        $ext = pathinfo( $path, PATHINFO_EXTENSION );
-        $file_name = basename( $path, '.' . $ext );
-        if( $ext!='jpg' && $ext!='png' && $ext!='jpeg' && $ext!='gif' ) {
-            $valid = 0;
-            $error_message .= 'You must have to upload jpg, jpeg, gif or png file<br>';
-        }
-    }
-    if($valid == 1) {
-        $statement = $pdo->prepare("SELECT * FROM tbl_settings WHERE id=1");
-        $statement->execute();
-        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-        foreach ($result as $row) {
-            $banner_seller_login = $row['banner_seller_login'];
-            if($banner_seller_login) unlink('../assets/uploads/'.$banner_seller_login);
-        }
-        $final_name = 'banner_seller_login'.'.'.$ext;
-        move_uploaded_file( $path_tmp, '../assets/uploads/'.$final_name );
-        $statement = $pdo->prepare("UPDATE tbl_settings SET banner_seller_login=? WHERE id=1");
-        $statement->execute(array($final_name));
-        $success_message = 'Seller Login Page Banner is updated successfully.';
-    }
-}
-// Seller Registration Banner
-if(isset($_POST['form7_seller_registration'])) {
-    $valid = 1;
-    $path = $_FILES['photo']['name'];
-    $path_tmp = $_FILES['photo']['tmp_name'];
-    if($path == '') {
-        $valid = 0;
-        $error_message .= 'You must have to select a photo<br>';
-    } else {
-        $ext = pathinfo( $path, PATHINFO_EXTENSION );
-        $file_name = basename( $path, '.' . $ext );
-        if( $ext!='jpg' && $ext!='png' && $ext!='jpeg' && $ext!='gif' ) {
-            $valid = 0;
-            $error_message .= 'You must have to upload jpg, jpeg, gif or png file<br>';
-        }
-    }
-    if($valid == 1) {
-        $statement = $pdo->prepare("SELECT * FROM tbl_settings WHERE id=1");
-        $statement->execute();
-        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-        foreach ($result as $row) {
-            $banner_seller_registration = $row['banner_seller_registration'];
-            if($banner_seller_registration) unlink('../assets/uploads/'.$banner_seller_registration);
-        }
-        $final_name = 'banner_seller_registration'.'.'.$ext;
-        move_uploaded_file( $path_tmp, '../assets/uploads/'.$final_name );
-        $statement = $pdo->prepare("UPDATE tbl_settings SET banner_seller_registration=? WHERE id=1");
-        $statement->execute(array($final_name));
-        $success_message = 'Seller Registration Page Banner is updated successfully.';
-    }
-}
 ?>
 
-<section class="content-header">
-    <div class="content-header-left">
-        <h1>Website Settings</h1>
-    </div>
-</section>
 
 <?php
 $statement = $pdo->prepare("SELECT * FROM tbl_settings WHERE id=1");
@@ -873,15 +795,7 @@ foreach ($result as $row) {
     $meta_title_home                 = $row['meta_title_home'];
     $meta_keyword_home               = $row['meta_keyword_home'];
     $meta_description_home           = $row['meta_description_home'];
-    $banner_login                    = $row['banner_login'];
-    $banner_registration             = $row['banner_registration'];
-    $banner_forget_password          = $row['banner_forget_password'];
-    $banner_reset_password           = $row['banner_reset_password'];
-    $banner_search                   = $row['banner_search'];
-    $banner_cart                     = $row['banner_cart'];
-    $banner_checkout                 = $row['banner_checkout'];
-    $banner_product_category         = $row['banner_product_category'];
-   // $banner_blog                     = $row['banner_blog'];
+   // Removed: banner_* fields no longer used
    // $cta_title                       = $row['cta_title'];
    // $cta_content                     = $row['cta_content'];
    // $cta_read_more_text              = $row['cta_read_more_text'];
@@ -917,80 +831,105 @@ foreach ($result as $row) {
   //  $ads_above_welcome_on_off           = $row['ads_above_welcome_on_off'];
   //  $ads_above_featured_product_on_off  = $row['ads_above_featured_product_on_off'];
   //  $ads_above_latest_product_on_off    = $row['ads_above_latest_product_on_off'];
- //   $ads_above_popular_product_on_off   = $row['ads_above_popular_product_on_off'];
- //   $ads_above_testimonial_on_off       = $row['ads_above_testimonial_on_off'];
+  //  $ads_above_popular_product_on_off   = $row['ads_above_popular_product_on_off'];
+  //  $ads_above_testimonial_on_off       = $row['ads_above_testimonial_on_off'];
   //  $ads_category_sidebar_on_off        = $row['ads_category_sidebar_on_off'];
-    $banner_seller_login             = $row['banner_seller_login'];
-    $banner_seller_registration      = $row['banner_seller_registration'];
 }
 ?>
 
 
-<section class="content" style="min-height:auto;margin-bottom: -30px;">
-    <div class="row">
-        <div class="col-md-12">
-            <?php if($error_message): ?>
-            <div class="callout callout-danger">
-            
-            <p>
-            <?php echo $error_message; ?>
-            </p>
-            </div>
-            <?php endif; ?>
+<!-- Modern Page Header -->
+<div class="modern-page-header fade-in" style="margin-top: -40px;">
+    <h1>
+        <i class="fa fa-cogs"></i>
+        Website Settings
+    </h1>
+    <div class="subtitle">Configure your website's core settings and preferences</div>
+</div>
 
-            <?php if($success_message): ?>
-            <div class="callout callout-success">
-            
-            <p><?php echo $success_message; ?></p>
-            </div>
-            <?php endif; ?>
+<div class="modern-container slide-in">
+    <?php if($error_message): ?>
+    <div class="modern-alert modern-alert-danger">
+        <i class="fa fa-exclamation-triangle"></i>
+        <div class="alert-content">
+            <strong>Error!</strong>
+            <p><?php echo $error_message; ?></p>
         </div>
     </div>
-</section>
+    <?php endif; ?>
 
-<section class="content">
+    <?php if($success_message): ?>
+    <div class="modern-alert modern-alert-success">
+        <i class="fa fa-check-circle"></i>
+        <div class="alert-content">
+            <strong>Success!</strong>
+            <p><?php echo $success_message; ?></p>
+        </div>
+    </div>
+    <?php endif; ?>
+</div>
 
-    <div class="row">
-        <div class="col-md-12">
-                            
-                <div class="nav-tabs-custom">
-                    <ul class="nav nav-tabs">
-                        <li class="active"><a href="#tab_1" data-toggle="tab">Logo</a></li>
-                        <li><a href="#tab_2" data-toggle="tab">Favicon</a></li>
-                        <li><a href="#tab_3" data-toggle="tab">Footer & Contact</a></li>
-                        <li><a href="#tab_4" data-toggle="tab">Message Settings</a></li>
-                        <li><a href="#tab_5" data-toggle="tab">Products</a></li>
-                        <li><a href="#tab_6" data-toggle="tab">Home Settings</a></li>
-                        <li><a href="#tab_7" data-toggle="tab">Banner Settings</a></li>
-                        <li><a href="#tab_9" data-toggle="tab">Payment Settings</a></li>
-                        <li><a href="#tab_10" data-toggle="tab">Head & Body Scripts</a></li>
-                       <!--<li><a href="#tab_11" data-toggle="tab">Ads</a></li>-->
-                    </ul>
-                    <div class="tab-content">
-                        <div class="tab-pane active" id="tab_1">
+<div class="modern-container">
+    <div class="modern-tabs-container">
+        <div class="modern-tabs-nav">
+            <button class="modern-tab-btn active" data-tab="tab_1">
+                <i class="fa fa-image"></i> Logo
+            </button>
+            <button class="modern-tab-btn" data-tab="tab_2">
+                <i class="fa fa-star"></i> Favicon
+            </button>
+            <button class="modern-tab-btn" data-tab="tab_3">
+                <i class="fa fa-address-card"></i> Footer & Contact
+            </button>
+            <button class="modern-tab-btn" data-tab="tab_4">
+                <i class="fa fa-envelope"></i> Message Settings
+            </button>
+            <button class="modern-tab-btn" data-tab="tab_5">
+                <i class="fa fa-cube"></i> Products
+            </button>
+            <button class="modern-tab-btn" data-tab="tab_6">
+                <i class="fa fa-home"></i> Home Settings
+            </button>
+            <button class="modern-tab-btn" data-tab="tab_10">
+                <i class="fa fa-code"></i> Scripts
+            </button>
+        </div>
+        <div class="modern-tabs-content">
+            <div class="modern-tab-pane active" id="tab_1">
+                <div class="tab-header">
+                    <h3><i class="fa fa-image"></i> Logo Settings</h3>
+                    <p>Upload and manage your website logo</p>
+                </div>
 
 
                             <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
                             <div class="box box-info">
                                 <div class="box-body">
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-2 control-label">Existing Photo</label>
-                                        <div class="col-sm-6" style="padding-top:6px;">
-                                            <img src="../assets/uploads/<?php echo $logo; ?>" class="existing-photo" style="height:80px;">
-                                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Current Logo</label>
+                                <div class="logo-preview">
+                                    <img src="../assets/uploads/<?php echo $logo; ?>" class="current-logo" alt="Current Logo">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Upload New Logo</label>
+                                <div class="file-upload-wrapper">
+                                    <input type="file" name="photo_logo" class="modern-file-input" accept=".jpg,.jpeg,.png,.gif">
+                                    <div class="file-upload-info">
+                                        <i class="fa fa-cloud-upload"></i>
+                                        <span>Choose logo file (JPG, PNG, GIF)</span>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-2 control-label">New Photo</label>
-                                        <div class="col-sm-6" style="padding-top:6px;">
-                                            <input type="file" name="photo_logo">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-2 control-label"></label>
-                                        <div class="col-sm-6">
-                                            <button type="submit" class="btn btn-success pull-left" name="form1">Update Logo</button>
-                                        </div>
-                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="modern-btn modern-btn-primary" name="form1">
+                                <i class="fa fa-save"></i> Update Logo
+                            </button>
+                        </div>
                                 </div>
                             </div>
                             </form>
@@ -998,318 +937,310 @@ foreach ($result as $row) {
                             
 
 
-                        </div>
-                        <div class="tab-pane" id="tab_2">
+            </div>
+            <div class="modern-tab-pane" id="tab_2">
+                <div class="tab-header">
+                    <h3><i class="fa fa-star"></i> Favicon Settings</h3>
+                    <p>Upload and manage your website favicon</p>
+                </div>
 
                             <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
                             <div class="box box-info">
                                 <div class="box-body">
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-2 control-label">Existing Photo</label>
-                                        <div class="col-sm-6" style="padding-top:6px;">
-                                            <img src="../assets/uploads/<?php echo $favicon; ?>" class="existing-photo" style="height:40px;">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-2 control-label">New Photo</label>
-                                        <div class="col-sm-6" style="padding-top:6px;">
-                                            <input type="file" name="photo_favicon">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-2 control-label"></label>
-                                        <div class="col-sm-6">
-                                            <button type="submit" class="btn btn-success pull-left" name="form2">Update Favicon</button>
-                                        </div>
-                                    </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Current Favicon</label>
+                                <div class="favicon-preview">
+                                    <img src="../assets/uploads/<?php echo $favicon; ?>" class="current-favicon" alt="Current Favicon">
                                 </div>
                             </div>
-                            </form>
-
-
                         </div>
-                        <div class="tab-pane" id="tab_3">
-
-                            <form class="form-horizontal" action="" method="post">
-                            <div class="box box-info">
-                                <div class="box-body">
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-2 control-label">Newsletter Section </label>
-                                        <div class="col-sm-3">
-                                            <select name="newsletter_on_off" class="form-control" style="width:auto;">
-                                                <option value="1" <?php if($newsletter_on_off == 1) {echo 'selected';} ?>>On</option>
-                                                <option value="0" <?php if($newsletter_on_off == 0) {echo 'selected';} ?>>Off</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-2 control-label">Footer - Copyright </label>
-                                        <div class="col-sm-9">
-                                            <input class="form-control" type="text" name="footer_copyright" value="<?php echo $footer_copyright; ?>">
-                                        </div>
-                                    </div>                              
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-2 control-label">Contact Address </label>
-                                        <div class="col-sm-6">
-                                            <textarea class="form-control" name="contact_address" style="height:140px;"><?php echo $contact_address; ?></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-2 control-label">Contact Email </label>
-                                        <div class="col-sm-6">
-                                            <input type="text" class="form-control" name="contact_email" value="<?php echo $contact_email; ?>">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-2 control-label">Contact Phone Number </label>
-                                        <div class="col-sm-6">
-                                            <input type="text" class="form-control" name="contact_phone" value="<?php echo $contact_phone; ?>">
-                                        </div>
-                                    </div>
-                                 <!-- <div class="form-group">
-                                        <label for="" class="col-sm-2 control-label">Contact Fax Number </label>
-                                        <div class="col-sm-6">
-                                            <input type="text" class="form-control" name="contact_fax" value="<?php echo $contact_fax; ?>">
-                                        </div>
-                                    </div>-->
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-2 control-label">Contact Map iFrame </label>
-                                        <div class="col-sm-9">
-                                            <textarea class="form-control" name="contact_map_iframe" style="height:200px;"><?php echo $contact_map_iframe; ?></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-2 control-label"></label>
-                                        <div class="col-sm-6">
-                                            <button type="submit" class="btn btn-success pull-left" name="form3">Update</button>
-                                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Upload New Favicon</label>
+                                <div class="file-upload-wrapper">
+                                    <input type="file" name="photo_favicon" class="modern-file-input" accept=".jpg,.jpeg,.png,.gif">
+                                    <div class="file-upload-info">
+                                        <i class="fa fa-cloud-upload"></i>
+                                        <span>Choose favicon file (JPG, PNG, GIF)</span>
                                     </div>
                                 </div>
                             </div>
-                            </form>
-
-
                         </div>
-
-                        <div class="tab-pane" id="tab_4">
-
-                            <form class="form-horizontal" action="" method="post">
-                            <div class="box box-info">
-                                <div class="box-body">
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-3 control-label">Contact Email Address</label>
-                                        <div class="col-sm-4">
-                                            <input type="text" class="form-control" name="receive_email" value="<?php echo $receive_email; ?>">
-                                        </div>
-                                    </div>                                  
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-3 control-label">Contact Email Subject</label>
-                                        <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="receive_email_subject" value="<?php echo $receive_email_subject; ?>">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-3 control-label">Contact Email Thank you message</label>
-                                        <div class="col-sm-8">
-                                            <textarea class="form-control" name="receive_email_thank_you_message"><?php echo $receive_email_thank_you_message; ?></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-3 control-label">Forget password Message</label>
-                                        <div class="col-sm-8">
-                                            <textarea class="form-control" name="forget_password_message"><?php echo $forget_password_message; ?></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-3 control-label"></label>
-                                        <div class="col-sm-5">
-                                            <button type="submit" class="btn btn-success pull-left" name="form4">Update</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            </form>
-
-
+                        <div class="form-actions">
+                            <button type="submit" class="modern-btn modern-btn-primary" name="form2">
+                                <i class="fa fa-save"></i> Update Favicon
+                            </button>
                         </div>
-
-                        <div class="tab-pane" id="tab_5">
-
-                            <form class="form-horizontal" action="" method="post">
-                            <div class="box box-info">
-                                <div class="box-body">
-                                    <!--<div class="form-group">
-                                        <label for="" class="col-sm-4 control-label">Footer (How many recent posts?)<span>*</span></label>
-                                        <div class="col-sm-2">
-                                            <input type="text" class="form-control" name="total_recent_post_footer" value="<?php echo $total_recent_post_footer; ?>">
-                                        </div>
-                                    </div>      
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-4 control-label">Footer (How many popular posts?)<span>*</span></label>
-                                        <div class="col-sm-2">
-                                            <input type="text" class="form-control" name="total_popular_post_footer" value="<?php echo $total_popular_post_footer; ?>">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-4 control-label">Sidebar (How many recent posts?)<span>*</span></label>
-                                        <div class="col-sm-2">
-                                            <input type="text" class="form-control" name="total_recent_post_sidebar" value="<?php echo $total_recent_post_sidebar; ?>">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-4 control-label">Sidebar (How many popular posts?)<span>*</span></label>
-                                        <div class="col-sm-2">
-                                            <input type="text" class="form-control" name="total_popular_post_sidebar" value="<?php echo $total_popular_post_sidebar; ?>">
-                                        </div>
-                                    </div>-->
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-4 control-label">Home Page (How many featured product?)<span>*</span></label>
-                                        <div class="col-sm-2">
-                                            <input type="text" class="form-control" name="total_featured_product_home" value="<?php echo $total_featured_product_home; ?>">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-4 control-label">Home Page (How many latest product?)<span>*</span></label>
-                                        <div class="col-sm-2">
-                                            <input type="text" class="form-control" name="total_latest_product_home" value="<?php echo $total_latest_product_home; ?>">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-4 control-label">Home Page (How many popular product?)<span>*</span></label>
-                                        <div class="col-sm-2">
-                                            <input type="text" class="form-control" name="total_popular_product_home" value="<?php echo $total_popular_product_home; ?>">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-4 control-label"></label>
-                                        <div class="col-sm-6">
-                                            <button type="submit" class="btn btn-success pull-left" name="form5">Update</button>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                             </form>
 
 
+            </div>
+            <div class="modern-tab-pane" id="tab_3">
+                <div class="tab-header">
+                    <h3><i class="fa fa-address-card"></i> Footer & Contact Settings</h3>
+                    <p>Configure footer content and contact information</p>
+                </div>
+
+                <!-- Newsletter Settings -->
+                <div class="settings-section">
+                    <h4><i class="fa fa-envelope"></i> Newsletter Configuration</h4>
+                    <form class="modern-form" action="" method="post">
+                        <div class="form-card">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Newsletter Section Status</label>
+                                    <select name="newsletter_on_off" class="modern-form-control">
+                                        <option value="1" <?php if($newsletter_on_off == 1) {echo 'selected';} ?>>Enable Newsletter</option>
+                                        <option value="0" <?php if($newsletter_on_off == 0) {echo 'selected';} ?>>Disable Newsletter</option>
+                                    </select>
+                                    <small class="form-text">Enable or disable the newsletter subscription section on your website</small>
+                                </div>
+                            </div>
                         </div>
+                    </form>
+                </div>
 
-
-
-
-                        <div class="tab-pane" id="tab_6">
-
-
-                        	<h3>Sections On and Off</h3>
-                            <form class="form-horizontal" action="" method="post">
-                            <div class="box box-info">
-                                <div class="box-body">
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-3 control-label">Service Section </label>
-                                        <div class="col-sm-4">
-                                            <select name="home_service_on_off" class="form-control" style="width:auto;">
-                                            	<option value="1" <?php if($home_service_on_off == 1) {echo 'selected';} ?>>On</option>
-                                            	<option value="0" <?php if($home_service_on_off == 0) {echo 'selected';} ?>>Off</option>
-                                            </select>
-                                        </div>
-                                    </div>      
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-3 control-label">Welcome Section </label>
-                                        <div class="col-sm-4">
-                                            <select name="home_welcome_on_off" class="form-control" style="width:auto;">
-                                            	<option value="1" <?php if($home_welcome_on_off == 1) {echo 'selected';} ?>>On</option>
-                                            	<option value="0" <?php if($home_welcome_on_off == 0) {echo 'selected';} ?>>Off</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-3 control-label">Featured Product Section </label>
-                                        <div class="col-sm-4">
-                                            <select name="home_featured_product_on_off" class="form-control" style="width:auto;">
-                                            	<option value="1" <?php if($home_featured_product_on_off == 1) {echo 'selected';} ?>>On</option>
-                                            	<option value="0" <?php if($home_featured_product_on_off == 0) {echo 'selected';} ?>>Off</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-3 control-label">Latest Product Section </label>
-                                        <div class="col-sm-4">
-                                            <select name="home_latest_product_on_off" class="form-control" style="width:auto;">
-                                            	<option value="1" <?php if($home_latest_product_on_off == 1) {echo 'selected';} ?>>On</option>
-                                            	<option value="0" <?php if($home_latest_product_on_off == 0) {echo 'selected';} ?>>Off</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-3 control-label">Popular Product Section </label>
-                                        <div class="col-sm-4">
-                                            <select name="home_popular_product_on_off" class="form-control" style="width:auto;">
-                                            	<option value="1" <?php if($home_popular_product_on_off == 1) {echo 'selected';} ?>>On</option>
-                                            	<option value="0" <?php if($home_popular_product_on_off == 0) {echo 'selected';} ?>>Off</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                   <!-- <div class="form-group">
-                                        <label for="" class="col-sm-3 control-label">Testimonial Section </label>
-                                        <div class="col-sm-4">
-                                            <select name="home_testimonial_on_off" class="form-control" style="width:auto;">
-                                            	<option value="1" <?php if($home_testimonial_on_off == 1) {echo 'selected';} ?>>On</option>
-                                            	<option value="0" <?php if($home_testimonial_on_off == 0) {echo 'selected';} ?>>Off</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-3 control-label">Blog Section </label>
-                                        <div class="col-sm-4">
-                                            <select name="home_blog_on_off" class="form-control" style="width:auto;">
-                                            	<option value="1" <?php if($home_blog_on_off == 1) {echo 'selected';} ?>>On</option>
-                                            	<option value="0" <?php if($home_blog_on_off == 0) {echo 'selected';} ?>>Off</option>
-                                            </select>
-                                        </div>
-                                    </div>-->
-                                    
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-3 control-label"></label>
-                                        <div class="col-sm-6">
-                                            <button type="submit" class="btn btn-success pull-left" name="form6_0">Update</button>
-                                        </div>
-                                    </div>
+                <!-- Footer Settings -->
+                <div class="settings-section">
+                    <h4><i class="fa fa-copyright"></i> Footer Information</h4>
+                    <form class="modern-form" action="" method="post">
+                        <div class="form-card">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Copyright Text</label>
+                                    <input class="modern-form-control" type="text" name="footer_copyright" value="<?php echo htmlspecialchars($footer_copyright); ?>" placeholder="© 2024 Your Company Name. All rights reserved.">
+                                    <small class="form-text">This text will appear in the footer of your website</small>
                                 </div>
                             </div>
-                            </form>
+                        </div>
+                    </form>
+                </div>
 
-                            
-                            <h3>Meta Section</h3>
-                            <form class="form-horizontal" action="" method="post">
-                            <div class="box box-info">
-                                <div class="box-body">
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-3 control-label">Meta Title </label>
-                                        <div class="col-sm-8">
-                                            <input type="text" name="meta_title_home" class="form-control" value="<?php echo $meta_title_home ?>">
-                                        </div>
-                                    </div>      
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-3 control-label">Meta Keyword </label>
-                                        <div class="col-sm-8">
-                                            <textarea class="form-control" name="meta_keyword_home" style="height:100px;"><?php echo $meta_keyword_home ?></textarea>
-                                        </div>
-                                    </div>  
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-3 control-label">Meta Description </label>
-                                        <div class="col-sm-8">
-                                            <textarea class="form-control" name="meta_description_home" style="height:200px;"><?php echo $meta_description_home ?></textarea>
-                                        </div>
-                                    </div>  
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-3 control-label"></label>
-                                        <div class="col-sm-6">
-                                            <button type="submit" class="btn btn-success pull-left" name="form6">Update</button>
-                                        </div>
-                                    </div>
+                <!-- Contact Information -->
+                <div class="settings-section">
+                    <h4><i class="fa fa-phone"></i> Contact Information</h4>
+                    <form class="modern-form" action="" method="post">
+                        <div class="form-card">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Business Address</label>
+                                    <textarea class="modern-form-control modern-textarea" name="contact_address" placeholder="Enter your complete business address"><?php echo htmlspecialchars($contact_address); ?></textarea>
+                                    <small class="form-text">Your business address for customer contact</small>
                                 </div>
                             </div>
-                            </form>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Contact Email</label>
+                                    <input type="email" class="modern-form-control" name="contact_email" value="<?php echo htmlspecialchars($contact_email); ?>" placeholder="contact@yourcompany.com">
+                                    <small class="form-text">Primary email address for customer inquiries</small>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Phone Number</label>
+                                    <input type="tel" class="modern-form-control" name="contact_phone" value="<?php echo htmlspecialchars($contact_phone); ?>" placeholder="+1 (555) 123-4567">
+                                    <small class="form-text">Primary phone number for customer support</small>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Map Integration -->
+                <div class="settings-section">
+                    <h4><i class="fa fa-map-marker"></i> Location Map</h4>
+                    <form class="modern-form" action="" method="post">
+                        <div class="form-card">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Google Maps Embed Code</label>
+                                    <textarea class="modern-form-control modern-textarea" name="contact_map_iframe" placeholder="Paste your Google Maps embed iframe code here" style="min-height: 150px;"><?php echo htmlspecialchars($contact_map_iframe); ?></textarea>
+                                    <small class="form-text">
+                                        <strong>How to get embed code:</strong><br>
+                                        1. Go to <a href="https://maps.google.com" target="_blank">Google Maps</a><br>
+                                        2. Search for your business location<br>
+                                        3. Click "Share" → "Embed a map"<br>
+                                        4. Copy the iframe code and paste it here
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="modern-btn modern-btn-primary" name="form3">
+                                    <i class="fa fa-save"></i> Update Footer & Contact Settings
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modern-tab-pane" id="tab_4">
+                <div class="tab-header">
+                    <h3><i class="fa fa-envelope"></i> Message Settings</h3>
+                    <p>Configure email settings and messages</p>
+                </div>
+
+                <form class="modern-form" action="" method="post">
+                    <div class="form-card">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Contact Email Address</label>
+                                <input type="email" class="modern-form-control" name="receive_email" value="<?php echo htmlspecialchars($receive_email); ?>" placeholder="Enter contact email">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Contact Email Subject</label>
+                                <input type="text" class="modern-form-control" name="receive_email_subject" value="<?php echo htmlspecialchars($receive_email_subject); ?>" placeholder="Enter email subject">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Thank You Message</label>
+                                <textarea class="modern-form-control modern-textarea" name="receive_email_thank_you_message" placeholder="Enter thank you message for contact form submissions"><?php echo htmlspecialchars($receive_email_thank_you_message); ?></textarea>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Forget Password Message</label>
+                                <textarea class="modern-form-control modern-textarea" name="forget_password_message" placeholder="Enter forget password message"><?php echo htmlspecialchars($forget_password_message); ?></textarea>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="modern-btn modern-btn-primary" name="form4">
+                                <i class="fa fa-save"></i> Update Settings
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modern-tab-pane" id="tab_5">
+                <div class="tab-header">
+                    <h3><i class="fa fa-cube"></i> Product Settings</h3>
+                    <p>Configure product display settings</p>
+                </div>
+
+                <form class="modern-form" action="" method="post">
+                    <div class="form-card">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Featured Products on Home <span class="required">*</span></label>
+                                <input type="number" class="modern-form-control" name="total_featured_product_home" value="<?php echo htmlspecialchars($total_featured_product_home); ?>" placeholder="Number of featured products">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Latest Products on Home <span class="required">*</span></label>
+                                <input type="number" class="modern-form-control" name="total_latest_product_home" value="<?php echo htmlspecialchars($total_latest_product_home); ?>" placeholder="Number of latest products">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Popular Products on Home <span class="required">*</span></label>
+                                <input type="number" class="modern-form-control" name="total_popular_product_home" value="<?php echo htmlspecialchars($total_popular_product_home); ?>" placeholder="Number of popular products">
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="modern-btn modern-btn-primary" name="form5">
+                                <i class="fa fa-save"></i> Update Settings
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modern-tab-pane" id="tab_6">
+                <div class="tab-header">
+                    <h3><i class="fa fa-home"></i> Home Settings</h3>
+                    <p>Configure home page sections and content</p>
+                </div>
+
+                <!-- Section On/Off Settings -->
+                <div class="settings-section">
+                    <h4><i class="fa fa-toggle-on"></i> Section Visibility</h4>
+                    <form class="modern-form" action="" method="post">
+                        <div class="form-card">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Service Section</label>
+                                    <select name="home_service_on_off" class="modern-form-control">
+                                        <option value="1" <?php if($home_service_on_off == 1) {echo 'selected';} ?>>On</option>
+                                        <option value="0" <?php if($home_service_on_off == 0) {echo 'selected';} ?>>Off</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Welcome Section</label>
+                                    <select name="home_welcome_on_off" class="modern-form-control">
+                                        <option value="1" <?php if($home_welcome_on_off == 1) {echo 'selected';} ?>>On</option>
+                                        <option value="0" <?php if($home_welcome_on_off == 0) {echo 'selected';} ?>>Off</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Featured Product Section</label>
+                                    <select name="home_featured_product_on_off" class="modern-form-control">
+                                        <option value="1" <?php if($home_featured_product_on_off == 1) {echo 'selected';} ?>>On</option>
+                                        <option value="0" <?php if($home_featured_product_on_off == 0) {echo 'selected';} ?>>Off</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Latest Product Section</label>
+                                    <select name="home_latest_product_on_off" class="modern-form-control">
+                                        <option value="1" <?php if($home_latest_product_on_off == 1) {echo 'selected';} ?>>On</option>
+                                        <option value="0" <?php if($home_latest_product_on_off == 0) {echo 'selected';} ?>>Off</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Popular Product Section</label>
+                                    <select name="home_popular_product_on_off" class="modern-form-control">
+                                        <option value="1" <?php if($home_popular_product_on_off == 1) {echo 'selected';} ?>>On</option>
+                                        <option value="0" <?php if($home_popular_product_on_off == 0) {echo 'selected';} ?>>Off</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="modern-btn modern-btn-primary" name="form6_0">
+                                    <i class="fa fa-save"></i> Update Sections
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                
+                <!-- Meta Settings -->
+                <div class="settings-section">
+                    <h4><i class="fa fa-search"></i> SEO Meta Settings</h4>
+                    <form class="modern-form" action="" method="post">
+                        <div class="form-card">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Meta Title</label>
+                                    <input type="text" name="meta_title_home" class="modern-form-control" value="<?php echo htmlspecialchars($meta_title_home); ?>" placeholder="Enter meta title for home page">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Meta Keywords</label>
+                                    <textarea class="modern-form-control modern-textarea" name="meta_keyword_home" placeholder="Enter comma-separated keywords"><?php echo htmlspecialchars($meta_keyword_home); ?></textarea>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Meta Description</label>
+                                    <textarea class="modern-form-control modern-textarea" name="meta_description_home" placeholder="Enter meta description for home page"><?php echo htmlspecialchars($meta_description_home); ?></textarea>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="modern-btn modern-btn-primary" name="form6">
+                                    <i class="fa fa-save"></i> Update Meta Settings
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
 
 
 
@@ -1326,7 +1257,7 @@ foreach ($result as $row) {
                                     <div class="form-group">
                                         <label for="" class="col-sm-3 control-label">Content<span>*</span></label>
                                         <div class="col-sm-8">
-                                            <textarea name="cta_content" class="form-control" cols="30" rows="10" style="height:120px;"><?php echo $cta_content; ?></textarea>
+                                            <textarea name="cta_content" class="form-control" cols="30" rows="10" style="height:120px;">&<?php echo $cta_content; ?></textarea>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -1367,85 +1298,85 @@ foreach ($result as $row) {
 
 
 
-                            <h3>Featured Product Section</h3>
-                            <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
-                            <div class="box box-info">
-                                <div class="box-body">                                          
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-3 control-label">Featured Product Title<span>*</span></label>
-                                        <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="featured_product_title" value="<?php echo $featured_product_title; ?>">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-3 control-label">Featured Product SubTitle<span>*</span></label>
-                                        <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="featured_product_subtitle" value="<?php echo $featured_product_subtitle; ?>">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-3 control-label"></label>
-                                        <div class="col-sm-6">
-                                            <button type="submit" class="btn btn-success pull-left" name="form6_4">Update</button>
-                                        </div>
-                                    </div>
+                <!-- Featured Product Section -->
+                <div class="settings-section">
+                    <h4><i class="fa fa-star"></i> Featured Product Section</h4>
+                    <form class="modern-form" action="" method="post">
+                        <div class="form-card">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Featured Product Title <span class="required">*</span></label>
+                                    <input type="text" class="modern-form-control" name="featured_product_title" value="<?php echo htmlspecialchars($featured_product_title); ?>" placeholder="Enter featured products title">
                                 </div>
                             </div>
-                            </form>
-
-
-                            <h3>Latest Product Section</h3>
-                            <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
-                            <div class="box box-info">
-                                <div class="box-body">                                          
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-3 control-label">Latest Product Title<span>*</span></label>
-                                        <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="latest_product_title" value="<?php echo $latest_product_title; ?>">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-3 control-label">Latest Product SubTitle<span>*</span></label>
-                                        <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="latest_product_subtitle" value="<?php echo $latest_product_subtitle; ?>">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-3 control-label"></label>
-                                        <div class="col-sm-6">
-                                            <button type="submit" class="btn btn-success pull-left" name="form6_5">Update</button>
-                                        </div>
-                                    </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Featured Product Subtitle <span class="required">*</span></label>
+                                    <input type="text" class="modern-form-control" name="featured_product_subtitle" value="<?php echo htmlspecialchars($featured_product_subtitle); ?>" placeholder="Enter featured products subtitle">
                                 </div>
                             </div>
-                            </form>
+                            <div class="form-actions">
+                                <button type="submit" class="modern-btn modern-btn-primary" name="form6_4">
+                                    <i class="fa fa-save"></i> Update Featured Products
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
 
 
-                            <h3>Popular Product Section</h3>
-                            <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
-                            <div class="box box-info">
-                                <div class="box-body">                                          
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-3 control-label">Popular Product Title<span>*</span></label>
-                                        <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="popular_product_title" value="<?php echo $popular_product_title; ?>">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-3 control-label">Popular Product SubTitle<span>*</span></label>
-                                        <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="popular_product_subtitle" value="<?php echo $popular_product_subtitle; ?>">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-3 control-label"></label>
-                                        <div class="col-sm-6">
-                                            <button type="submit" class="btn btn-success pull-left" name="form6_6">Update</button>
-                                        </div>
-                                    </div>
+                <!-- Latest Product Section -->
+                <div class="settings-section">
+                    <h4><i class="fa fa-clock-o"></i> Latest Product Section</h4>
+                    <form class="modern-form" action="" method="post">
+                        <div class="form-card">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Latest Product Title <span class="required">*</span></label>
+                                    <input type="text" class="modern-form-control" name="latest_product_title" value="<?php echo htmlspecialchars($latest_product_title); ?>" placeholder="Enter latest products title">
                                 </div>
                             </div>
-                            </form>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Latest Product Subtitle <span class="required">*</span></label>
+                                    <input type="text" class="modern-form-control" name="latest_product_subtitle" value="<?php echo htmlspecialchars($latest_product_subtitle); ?>" placeholder="Enter latest products subtitle">
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="modern-btn modern-btn-primary" name="form6_5">
+                                    <i class="fa fa-save"></i> Update Latest Products
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+
+                <!-- Popular Product Section -->
+                <div class="settings-section">
+                    <h4><i class="fa fa-fire"></i> Popular Product Section</h4>
+                    <form class="modern-form" action="" method="post">
+                        <div class="form-card">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Popular Product Title <span class="required">*</span></label>
+                                    <input type="text" class="modern-form-control" name="popular_product_title" value="<?php echo htmlspecialchars($popular_product_title); ?>" placeholder="Enter popular products title">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Popular Product Subtitle <span class="required">*</span></label>
+                                    <input type="text" class="modern-form-control" name="popular_product_subtitle" value="<?php echo htmlspecialchars($popular_product_subtitle); ?>" placeholder="Enter popular products subtitle">
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="modern-btn modern-btn-primary" name="form6_6">
+                                    <i class="fa fa-save"></i> Update Popular Products
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
 
 
                             <!--
@@ -1517,289 +1448,63 @@ foreach ($result as $row) {
                                     -->
                             
 
-                            <h3>Newsletter Section</h3>
-                            <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
-                            <div class="box box-info">
-                                <div class="box-body">                                          
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-3 control-label">Newsletter Text</label>
-                                        <div class="col-sm-8">
-                                            <textarea name="newsletter_text" class="form-control" cols="30" rows="10" style="height: 120px;"><?php echo $newsletter_text; ?></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-3 control-label"></label>
-                                        <div class="col-sm-6">
-                                            <button type="submit" class="btn btn-success pull-left" name="form6_3">Update</button>
-                                        </div>
-                                    </div>
+                <!-- Newsletter Section -->
+                <div class="settings-section">
+                    <h4><i class="fa fa-envelope-o"></i> Newsletter Section</h4>
+                    <form class="modern-form" action="" method="post">
+                        <div class="form-card">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Newsletter Text</label>
+                                    <textarea name="newsletter_text" class="modern-form-control modern-textarea" placeholder="Enter newsletter subscription text"><?php echo htmlspecialchars($newsletter_text); ?></textarea>
                                 </div>
                             </div>
-                            </form>
+                            <div class="form-actions">
+                                <button type="submit" class="modern-btn modern-btn-primary" name="form6_3">
+                                    <i class="fa fa-save"></i> Update Newsletter
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
 
 
                         </div>
+            </div>
+            <div class="modern-tab-pane" id="tab_10">
+                <div class="tab-header">
+                    <h3><i class="fa fa-code"></i> Scripts Settings</h3>
+                    <p>Add custom scripts and tracking codes</p>
+                </div>
 
-
-
-                        <div class="tab-pane" id="tab_7">
-
-                            <table class="table table-bordered">
-                                <tr>
-                                    <form action="" method="post" enctype="multipart/form-data">
-                                    <td style="width:50%">
-                                        <h4>Existing Login Page Banner</h4>
-                                        <p>
-                                            <img src="<?php echo '../assets/uploads/'.$banner_login; ?>" alt="" style="width: 100%;height:auto;"> 
-                                        </p>                                        
-                                    </td>
-                                    <td style="width:50%">
-                                        <h4>Change Login Page Banner</h4>
-                                        Select Photo<input type="file" name="photo">
-                                        <input type="submit" class="btn btn-primary btn-xs" value="Change" style="margin-top:10px;" name="form7_1">
-                                    </td>
-                                    </form>
-                                </tr>
-                                <tr>
-                                    <form action="" method="post" enctype="multipart/form-data">
-                                    <td style="width:50%">
-                                        <h4>Existing Registration Page Banner</h4>
-                                        <p>
-                                            <img src="<?php echo '../assets/uploads/'.$banner_registration; ?>" alt="" style="width: 100%;height:auto;">  
-                                        </p>                                        
-                                    </td>
-                                    <td style="width:50%">
-                                        <h4>Change Registration Page Banner</h4>
-                                        Select Photo<input type="file" name="photo">
-                                        <input type="submit" class="btn btn-primary btn-xs" value="Change" style="margin-top:10px;" name="form7_2">
-                                    </td>
-                                    </form>
-                                </tr>
-                                <tr>
-                                    <form action="" method="post" enctype="multipart/form-data">
-                                    <td style="width:50%">
-                                        <h4>Existing Forget Password Page Banner</h4>
-                                        <p>
-                                            <img src="<?php echo '../assets/uploads/'.$banner_forget_password; ?>" alt="" style="width: 100%;height:auto;">   
-                                        </p>                                        
-                                    </td>
-                                    <td style="width:50%">
-                                        <h4>Change Forget Password Page Banner</h4>
-                                        Select Photo<input type="file" name="photo">
-                                        <input type="submit" class="btn btn-primary btn-xs" value="Change" style="margin-top:10px;" name="form7_3">
-                                    </td>
-                                    </form>
-                                </tr>
-                                <tr>
-                                    <form action="" method="post" enctype="multipart/form-data">
-                                    <td style="width:50%">
-                                        <h4>Existing Reset Password Page Banner</h4>
-                                        <p>
-                                            <img src="<?php echo '../assets/uploads/'.$banner_reset_password; ?>" alt="" style="width: 100%;height:auto;">   
-                                        </p>                                        
-                                    </td>
-                                    <td style="width:50%">
-                                        <h4>Change Reset Password Page Banner</h4>
-                                        Select Photo<input type="file" name="photo">
-                                        <input type="submit" class="btn btn-primary btn-xs" value="Change" style="margin-top:10px;" name="form7_4">
-                                    </td>
-                                    </form>
-                                </tr>
-                                
-                                <tr>
-                                    <form action="" method="post" enctype="multipart/form-data">
-                                    <td style="width:50%">
-                                        <h4>Existing Search Page Banner</h4>
-                                        <p>
-                                            <img src="<?php echo '../assets/uploads/'.$banner_search; ?>" alt="" style="width: 100%;height:auto;">  
-                                        </p>                                        
-                                    </td>
-                                    <td style="width:50%">
-                                        <h4>Change Search Page Banner</h4>
-                                        Select Photo<input type="file" name="photo">
-                                        <input type="submit" class="btn btn-primary btn-xs" value="Change" style="margin-top:10px;" name="form7_6">
-                                    </td>
-                                    </form>
-                                </tr>
-
-
-                                <tr>
-                                    <form action="" method="post" enctype="multipart/form-data">
-                                    <td style="width:50%">
-                                        <h4>Existing Cart Page Banner</h4>
-                                        <p>
-                                            <img src="<?php echo '../assets/uploads/'.$banner_cart; ?>" alt="" style="width: 100%;height:auto;">  
-                                        </p>                                        
-                                    </td>
-                                    <td style="width:50%">
-                                        <h4>Change Cart Page Banner</h4>
-                                        Select Photo<input type="file" name="photo">
-                                        <input type="submit" class="btn btn-primary btn-xs" value="Change" style="margin-top:10px;" name="form7_7">
-                                    </td>
-                                    </form>
-                                </tr>
-
-
-                                <tr>
-                                    <form action="" method="post" enctype="multipart/form-data">
-                                    <td style="width:50%">
-                                        <h4>Existing Checkout Page Banner</h4>
-                                        <p>
-                                            <img src="<?php echo '../assets/uploads/'.$banner_checkout; ?>" alt="" style="width: 100%;height:auto;">  
-                                        </p>                                        
-                                    </td>
-                                    <td style="width:50%">
-                                        <h4>Change Checkout Page Banner</h4>
-                                        Select Photo<input type="file" name="photo">
-                                        <input type="submit" class="btn btn-primary btn-xs" value="Change" style="margin-top:10px;" name="form7_8">
-                                    </td>
-                                    </form>
-                                </tr>
-
-                                <tr>
-                                    <form action="" method="post" enctype="multipart/form-data">
-                                    <td style="width:50%">
-                                        <h4>Existing Product Category Page Banner</h4>
-                                        <p>
-                                            <img src="<?php echo '../assets/uploads/'.$banner_product_category; ?>" alt="" style="width: 100%;height:auto;">  
-                                        </p>                                        
-                                    </td>
-                                    <td style="width:50%">
-                                        <h4>Change Product Category Page Banner</h4>
-                                        Select Photo<input type="file" name="photo">
-                                        <input type="submit" class="btn btn-primary btn-xs" value="Change" style="margin-top:10px;" name="form7_9">
-                                    </td>
-                                    </form>
-                                </tr>
-
-                               <!-- <tr>
-                                    <form action="" method="post" enctype="multipart/form-data">
-                                    <td style="width:50%">
-                                        <h4>Existing Blog Page Banner</h4>
-                                        <p>
-                                            <img src="<?php echo '../assets/uploads/'.$banner_blog; ?>" alt="" style="width: 100%;height:auto;">  
-                                        </p>                                        
-                                    </td>
-                                    <td style="width:50%">
-                                        <h4>Change Blog Page Banner</h4>
-                                        Select Photo<input type="file" name="photo">
-                                        <input type="submit" class="btn btn-primary btn-xs" value="Change" style="margin-top:10px;" name="form7_10">
-                                    </td>
-                                    </form>
-                                </tr>-->
-                                <tr>
-                                    <form action="" method="post" enctype="multipart/form-data">
-                                    <td style="width:50%">
-                                        <h4>Existing Seller Login Page Banner</h4>
-                                        <p>
-                                            <img src="<?php echo '../assets/uploads/'.$banner_seller_login; ?>" alt="" style="width: 100%;height:auto;">
-                                        </p>
-                                    </td>
-                                    <td style="width:50%">
-                                        <h4>Change Seller Login Page Banner</h4>
-                                        Select Photo<input type="file" name="photo">
-                                        <input type="submit" class="btn btn-primary btn-xs" value="Change" style="margin-top:10px;" name="form7_seller_login">
-                                    </td>
-                                    </form>
-                                </tr>
-                                <tr>
-                                    <form action="" method="post" enctype="multipart/form-data">
-                                    <td style="width:50%">
-                                        <h4>Existing Seller Registration Page Banner</h4>
-                                        <p>
-                                            <img src="<?php echo '../assets/uploads/'.$banner_seller_registration; ?>" alt="" style="width: 100%;height:auto;">
-                                        </p>
-                                    </td>
-                                    <td style="width:50%">
-                                        <h4>Change Seller Registration Page Banner</h4>
-                                        Select Photo<input type="file" name="photo">
-                                        <input type="submit" class="btn btn-primary btn-xs" value="Change" style="margin-top:10px;" name="form7_seller_registration">
-                                    </td>
-                                    </form>
-                                </tr>
-                            </table>
-
+                <form class="modern-form" action="" method="post">
+                    <div class="form-card">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Code before &lt;/head&gt; tag</label>
+                                <textarea class="modern-form-control modern-textarea" name="before_head" placeholder="Add scripts, meta tags, or CSS here"><?php echo htmlspecialchars($before_head); ?></textarea>
+                            </div>
                         </div>
-
-
-
-                    
-<!-- PAYMENT METHODS TAB -->
-
-
-
-                        <div class="tab-pane" id="tab_9">
-                            <form class="form-horizontal" action="" method="post">
-                                <div class="box box-info">
-                                    <div class="box-body">
-                                        <div class="form-group">
-                                            <label for="" class="col-sm-2 control-label">PayPal - Business Email </label>
-                                            <div class="col-sm-5">
-                                                <input type="text" name="paypal_email" class="form-control" value="<?php echo $paypal_email; ?>">
-                                            </div>
-                                        </div>
-                                      <!-- <div class="form-group">
-                                            <label for="" class="col-sm-2 control-label">Stripe - Public Key </label>
-                                            <div class="col-sm-5">
-                                                <input type="text" name="stripe_public_key" class="form-control" value="<?php echo $stripe_public_key; ?>">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="" class="col-sm-2 control-label">Stripe - Secret Key </label>
-                                            <div class="col-sm-5">
-                                                <input type="text" name="stripe_secret_key" class="form-control" value="<?php echo $stripe_secret_key; ?>">
-                                            </div>
-                                        </div> -->
-                                        <div class="form-group">
-                                            <label for="" class="col-sm-2 control-label">Bank Information </label>
-                                            <div class="col-sm-5">
-                                                <textarea name="bank_detail" class="form-control" cols="30" rows="10"><?php echo $bank_detail; ?></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="" class="col-sm-2 control-label"></label>
-                                            <div class="col-sm-6">
-                                                <button type="submit" class="btn btn-success pull-left" name="form9">Update</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Code after &lt;body&gt; tag</label>
+                                <textarea class="modern-form-control modern-textarea" name="after_body" placeholder="Add tracking codes or scripts here"><?php echo htmlspecialchars($after_body); ?></textarea>
+                            </div>
                         </div>
-
-
-                        <div class="tab-pane" id="tab_10">
-                            <form class="form-horizontal" action="" method="post">
-                                <div class="box box-info">
-                                    <div class="box-body">
-                                        <div class="form-group">
-                                            <label for="" class="col-sm-2 control-label">Code before &lt;/head&gt; tag </label>
-                                            <div class="col-sm-8">
-                                                <textarea name="before_head" class="form-control" cols="30" rows="10"><?php echo $before_head; ?></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="" class="col-sm-2 control-label">Code after &lt;body&gt; tag </label>
-                                            <div class="col-sm-8">
-                                                <textarea name="after_body" class="form-control" cols="30" rows="10"><?php echo $after_body; ?></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="" class="col-sm-2 control-label">Code before &lt;/body&gt; tag </label>
-                                            <div class="col-sm-8">
-                                                <textarea name="before_body" class="form-control" cols="30" rows="10"><?php echo $before_body; ?></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="" class="col-sm-2 control-label"></label>
-                                            <div class="col-sm-6">
-                                                <button type="submit" class="btn btn-success pull-left" name="form10">Update</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Code before &lt;/body&gt; tag</label>
+                                <textarea class="modern-form-control modern-textarea" name="before_body" placeholder="Add JavaScript or analytics codes here"><?php echo htmlspecialchars($before_body); ?></textarea>
+                            </div>
                         </div>
+                        <div class="form-actions">
+                            <button type="submit" class="modern-btn modern-btn-primary" name="form10">
+                                <i class="fa fa-save"></i> Update Scripts
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
 
 
 <!--
@@ -1877,13 +1582,472 @@ foreach ($result as $row) {
 
                     </div>
                 </div>
-
-                
-
-            </form>
+            </div>
         </div>
     </div>
+</div>
 
-</section>
+<style>
+.modern-page-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem 0;
+    margin-bottom: 2rem;
+    border-radius: 10px;
+}
+
+.page-header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.page-title h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: 600;
+}
+
+.page-subtitle {
+    margin: 0.5rem 0 0 0;
+    opacity: 0.9;
+    font-size: 1.1rem;
+}
+
+.page-icon {
+    font-size: 2rem;
+    margin-right: 1rem;
+    vertical-align: middle;
+}
+
+.modern-tabs-container {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.modern-tabs-nav {
+    display: flex;
+    background: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+    overflow-x: auto;
+}
+
+.modern-tab-btn {
+    background: none;
+    border: none;
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    font-size: 0.95rem;
+    color: #6c757d;
+    border-bottom: 3px solid transparent;
+}
+
+.modern-tab-btn:hover {
+    background: #e9ecef;
+    color: #495057;
+}
+
+.modern-tab-btn.active {
+    background: white;
+    color: #007bff;
+    border-bottom-color: #007bff;
+    font-weight: 600;
+}
+
+.modern-tab-btn i {
+    margin-right: 0.5rem;
+}
+
+.modern-tabs-content {
+    padding: 2rem;
+}
+
+.modern-tab-pane {
+    display: none;
+}
+
+.modern-tab-pane.active {
+    display: block;
+}
+
+.tab-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.tab-header h3 {
+    margin: 0 0 0.5rem 0;
+    color: #495057;
+    font-size: 1.5rem;
+}
+
+.tab-header p {
+    margin: 0;
+    color: #6c757d;
+    font-size: 1rem;
+}
+
+.form-card {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #e9ecef;
+}
+
+.settings-section {
+    margin-bottom: 2rem;
+}
+
+.settings-section h4 {
+    color: #495057;
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.settings-section h4 i {
+    margin-right: 0.5rem;
+    color: #007bff;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-label {
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.required {
+    color: #dc3545;
+    margin-left: 0.25rem;
+}
+
+.modern-form-control {
+    padding: 0.75rem;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.modern-form-control:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.modern-textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.form-actions {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e9ecef;
+}
+
+.modern-btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.modern-btn i {
+    margin-right: 0.5rem;
+}
+
+.modern-btn-primary {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+}
+
+.modern-btn-primary:hover {
+    background: linear-gradient(135deg, #0056b3, #004085);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+}
+
+.modern-btn-info {
+    background: linear-gradient(135deg, #17a2b8, #138496);
+    color: white;
+}
+
+.modern-btn-info:hover {
+    background: linear-gradient(135deg, #138496, #117a8b);
+    transform: translateY(-1px);
+}
+
+.logo-preview, .favicon-preview {
+    margin: 1rem 0;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 6px;
+    text-align: center;
+}
+
+.current-logo {
+    max-height: 80px;
+    max-width: 200px;
+}
+
+.current-favicon {
+    max-height: 32px;
+    max-width: 32px;
+}
+
+.file-upload-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.modern-file-input {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.file-upload-info {
+    padding: 1rem;
+    border: 2px dashed #ced4da;
+    border-radius: 6px;
+    text-align: center;
+    background: #f8f9fa;
+    transition: all 0.3s ease;
+}
+
+.file-upload-info:hover {
+    border-color: #007bff;
+    background: #e3f2fd;
+}
+
+.file-upload-info i {
+    font-size: 1.5rem;
+    color: #6c757d;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.modern-alert {
+    padding: 1rem 1.5rem;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.modern-alert-success {
+    background: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+}
+
+.modern-alert-danger {
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+}
+
+.modern-alert i {
+    font-size: 1.25rem;
+    margin-right: 1rem;
+}
+
+.alert-content {
+    flex: 1;
+}
+
+.alert-content strong {
+    display: block;
+    margin-bottom: 0.25rem;
+}
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #495057;
+}
+
+.logo-preview, .favicon-preview {
+    margin-top: 0.5rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 8px;
+    text-align: center;
+    border: 2px dashed #dee2e6;
+}
+
+.current-logo {
+    max-height: 80px;
+    max-width: 200px;
+}
+
+.current-favicon {
+    max-height: 40px;
+    max-width: 40px;
+}
+
+.file-upload-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.modern-file-input {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.file-upload-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: white;
+    border: 2px dashed #007bff;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.file-upload-info:hover {
+    background: #f8f9ff;
+    border-color: #0056b3;
+}
+
+.file-upload-info i {
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
+    color: #007bff;
+}
+
+.form-actions {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #dee2e6;
+}
+
+.modern-form-control {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.modern-form-control:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.modern-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
+}
+
+.modern-textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.form-text {
+    font-size: 0.875rem;
+    color: #6c757d;
+    margin-top: 0.5rem;
+    line-height: 1.4;
+}
+
+.form-text a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.form-text a:hover {
+    text-decoration: underline;
+}
+
+.form-text strong {
+    color: #495057;
+    font-weight: 600;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Tab functionality
+    const tabButtons = document.querySelectorAll('.modern-tab-btn');
+    const tabPanes = document.querySelectorAll('.modern-tab-pane');
+    
+    tabButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const targetTab = this.getAttribute('data-tab');
+            
+            // Remove active class from all buttons and panes
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabPanes.forEach(pane => pane.classList.remove('active'));
+            
+            // Add active class to clicked button and corresponding pane
+            this.classList.add('active');
+            document.getElementById(targetTab).classList.add('active');
+        });
+    });
+    
+    // File upload preview
+    const fileInputs = document.querySelectorAll('.modern-file-input');
+    fileInputs.forEach(input => {
+        input.addEventListener('change', function() {
+            const fileName = this.files[0] ? this.files[0].name : 'Choose file';
+            const infoSpan = this.parentElement.querySelector('.file-upload-info span');
+            if (infoSpan) {
+                infoSpan.textContent = fileName;
+            }
+        });
+    });
+});
+</script>
 
 <?php require_once('footer.php'); ?>

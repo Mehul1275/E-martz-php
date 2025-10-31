@@ -1,3 +1,11 @@
+<?php
+/*
+=== SERVICE ADD PAGE - COMMENTED OUT ===
+This file has been disabled as the services functionality has been removed from the website.
+To re-enable, uncomment all the code below.
+*/
+
+/*
 <?php require_once('header.php'); ?>
 
 <?php
@@ -55,7 +63,7 @@ if(isset($_POST['form1'])) {
 }
 ?>
 
-<section class="content-header">
+<section class="content-header" style="margin-top: -40px;">
 	<div class="content-header-left">
 		<h1>Add Service</h1>
 	</div>
@@ -120,3 +128,4 @@ if(isset($_POST['form1'])) {
 </section>
 
 <?php require_once('footer.php'); ?>
+*/

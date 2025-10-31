@@ -1,6 +1,6 @@
 <?php require_once('header.php'); ?>
 
-<section class="content-header">
+<section class="content-header" style="margin-top: -40px;">
 	<div class="content-header-left">
 		<h1>Select Customer</h1>
 	</div>
@@ -48,7 +48,7 @@
 
 
 <?php if(isset($_POST['form1'])): ?>
-<section class="content-header">
+<section class="content-header" style="margin-top: -40px;">
 	<div class="content-header-left">
 		<h1>View All Customer Messages</h1>
 	</div>

@@ -1,0 +1,39 @@
+# IDE/Editor specific files
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Dependency directories
+/vendor/
+/node_modules/
+
+# Debug logs
+*.log
+error_log
+debug.log
+
+# Database files
+*.sqlite
+*.db
+
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# Uploaded files in development
+/assets/uploads/*
+!/assets/uploads/.gitkeep
+
+# Cache files
+*.cache

@@ -47,7 +47,7 @@ if(isset($_POST['form1'])) {
 }
 ?>
 
-<section class="content-header">
+<section class="content-header" style="margin-top: -40px;">
 	<div class="content-header-left">
 		<h1>Add Photo</h1>
 	</div>

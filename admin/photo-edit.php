@@ -60,7 +60,7 @@ if(!isset($_REQUEST['id'])) {
 }
 ?>
 
-<section class="content-header">
+<section class="content-header" style="margin-top: -40px;">
 	<div class="content-header-left">
 		<h1>Edit Photo</h1>
 	</div>

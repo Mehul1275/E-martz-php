@@ -25,10 +25,19 @@ foreach ($result as $row) {
 }
 ?>
 
-<section class="content-header">
-	<div class="content-header-left">
-		<h1>Setup Language</h1>
+<section class="modern-page-header fade-in" style="margin-top: -40px;">
+	<div class="page-header">
+		<h1 class="page-title">
+			<i class="fa fa-language"></i>
+			Language Settings
+		</h1>
+		<div class="page-actions">
+			<button class="modern-btn modern-btn-info" onclick="location.reload()">
+				<i class="fa fa-refresh"></i> Refresh
+			</button>
+		</div>
 	</div>
+	<p style="margin: 0.5rem 0 0 0; color: #64748b;">Configure website language and text content</p>
 </section>
 
 
@@ -47,24 +56,27 @@ foreach ($result as $row) {
     <div class="col-md-12">
 
 		<?php if($error_message): ?>
-		<div class="callout callout-danger">	
-    		<p>
-    		  <?php echo $error_message; ?>
-    		</p>
+		<div class="modern-alert modern-alert-danger">
+			<i class="fa fa-exclamation-triangle"></i>
+			<span><?php echo htmlspecialchars($error_message); ?></span>
 		</div>
 		<?php endif; ?>
 
 		<?php if($success_message): ?>
-		<div class="callout callout-success">
-		    <p><?php echo $success_message; ?></p>
+		<div class="modern-alert modern-alert-success">
+			<i class="fa fa-check-circle"></i>
+			<span><?php echo htmlspecialchars($success_message); ?></span>
 		</div>
 		<?php endif; ?>
 
-        <form class="form-horizontal" action="" method="post">
+        <form class="modern-form" action="" method="post">
         
-        <h3 style="font-size:20px;font-weight:500;">Basic</h3>
-		<div class="box box-info">
-            <div class="box-body">
+        <div class="modern-form-section">
+			<h3 class="section-title">
+				<i class="fa fa-cog"></i>
+				Basic Settings
+			</h3>
+			<div class="modern-form-container">
             	<div class="form-group">
                     <label for="" class="col-sm-4 control-label">Currency (₹) <span>*</span></label>
                     <div class="col-sm-6">
@@ -116,9 +128,12 @@ foreach ($result as $row) {
             </div>
         </div>
 
-        <h3 style="font-size:20px;font-weight:500;">Login</h3>
-		<div class="box box-info">
-            <div class="box-body">
+        <div class="modern-form-section">
+			<h3 class="section-title">
+				<i class="fa fa-sign-in"></i>
+				Login Settings
+			</h3>
+			<div class="modern-form-container">
 				<div class="form-group">
                     <label for="" class="col-sm-4 control-label">Login <span>*</span></label>
                     <div class="col-sm-6">
@@ -158,9 +173,12 @@ foreach ($result as $row) {
             </div>
         </div>
 		
-		<h3 style="font-size:20px;font-weight:500;">Registration</h3>
-        <div class="box box-info">
-            <div class="box-body">
+		<div class="modern-form-section">
+			<h3 class="section-title">
+				<i class="fa fa-user-plus"></i>
+				Registration Settings
+			</h3>
+			<div class="modern-form-container">
 				<div class="form-group">
                     <label for="" class="col-sm-4 control-label">Register <span>*</span></label>
                     <div class="col-sm-6">
@@ -182,9 +200,12 @@ foreach ($result as $row) {
             </div>
         </div>
 		
-		<h3 style="font-size:20px;font-weight:500;">Cart and Checkout</h3>
-        <div class="box box-info">
-            <div class="box-body">
+		<div class="modern-form-section">
+			<h3 class="section-title">
+				<i class="fa fa-shopping-cart"></i>
+				Cart and Checkout Settings
+			</h3>
+			<div class="modern-form-container">
 				<div class="form-group">
                     <label for="" class="col-sm-4 control-label">Cart <span>*</span></label>
                     <div class="col-sm-6">
@@ -237,9 +258,12 @@ foreach ($result as $row) {
             </div>
         </div>
 
-		<h3 style="font-size:20px;font-weight:500;">Payment</h3>
-        <div class="box box-info">
-            <div class="box-body">
+		<div class="modern-form-section">
+			<h3 class="section-title">
+				<i class="fa fa-credit-card"></i>
+				Payment Settings
+			</h3>
+			<div class="modern-form-container">
 				<div class="form-group">
                     <label for="" class="col-sm-4 control-label">Orders <span>*</span></label>
                     <div class="col-sm-6">
@@ -381,9 +405,12 @@ foreach ($result as $row) {
             </div>
         </div>
 		
-		<h3 style="font-size:20px;font-weight:500;">Product</h3>
-        <div class="box box-info">
-            <div class="box-body">				
+		<div class="modern-form-section">
+			<h3 class="section-title">
+				<i class="fa fa-cube"></i>
+				Product Settings
+			</h3>
+			<div class="modern-form-container">				
                 
                 <div class="form-group">
                     <label for="" class="col-sm-4 control-label">Product Name <span>*</span></label>
@@ -652,9 +679,12 @@ foreach ($result as $row) {
             </div>
         </div>
 		
-		<h3 style="font-size:20px;font-weight:500;">Billing and Shipping</h3>
-        <div class="box box-info">
-            <div class="box-body">
+		<div class="modern-form-section">
+			<h3 class="section-title">
+				<i class="fa fa-truck"></i>
+				Billing and Shipping Settings
+			</h3>
+			<div class="modern-form-container">
             	<div class="form-group">
                     <label for="" class="col-sm-4 control-label">Shipping Cost <span>*</span></label>
                     <div class="col-sm-6">
@@ -1136,15 +1166,11 @@ foreach ($result as $row) {
 
 
 
-        <div class="box box-info">
-            <div class="box-body">
-                <div class="form-group">
-                    <label for="" class="col-sm-4 control-label"></label>
-                    <div class="col-sm-6">
-                      <button type="submit" class="btn btn-success pull-left" name="form1">Update</button>
-                    </div>
-                </div>
-            </div>
+        <div class="modern-form-actions">
+            <button type="submit" class="modern-btn modern-btn-primary" name="form1">
+                <i class="fa fa-save"></i>
+                Update Language Settings
+            </button>
         </div>
 
         </form>

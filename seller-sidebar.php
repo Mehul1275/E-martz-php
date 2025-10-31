@@ -19,11 +19,16 @@ $cur_page = substr($_SERVER["SCRIPT_NAME"],strrpos($_SERVER["SCRIPT_NAME"],"/")+
                     <i class="fa fa-shopping-cart"></i> <span>Order Management</span>
                 </a>
             </li>
-            <li class="treeview <?php if($cur_page == 'seller-payments.php') {echo 'active';} ?>">
+            <li class="treeview <?php if($cur_page == 'seller-returns.php') {echo 'active';} ?>">
+                <a href="seller-returns.php">
+                    <i class="fa fa-undo"></i> <span>Return Orders</span>
+                </a>
+            </li>
+            <!--<li class="treeview <?php if($cur_page == 'seller-payments.php') {echo 'active';} ?>">
                 <a href="seller-payments.php">
                     <i class="fa fa-credit-card"></i> <span>View Payment</span>
                 </a>
-            </li>
+            </li> -->
             <li class="treeview <?php if($cur_page == 'seller-reviews.php') {echo 'active';} ?>">
                 <a href="seller-reviews.php">
                     <i class="fa fa-star"></i> <span>Product Review</span>

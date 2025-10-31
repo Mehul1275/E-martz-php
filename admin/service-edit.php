@@ -1,3 +1,11 @@
+<?php
+/*
+=== SERVICE EDIT PAGE - COMMENTED OUT ===
+This file has been disabled as the services functionality has been removed from the website.
+To re-enable, uncomment all the code below.
+*/
+
+/*
 <?php require_once('header.php'); ?>
 
 <?php
@@ -65,7 +73,7 @@ if(!isset($_REQUEST['id'])) {
 }
 ?>
 
-<section class="content-header">
+<section class="content-header" style="margin-top: -40px;">
 	<div class="content-header-left">
 		<h1>Edit Service</h1>
 	</div>
@@ -147,3 +155,4 @@ foreach ($result as $row) {
 </section>
 
 <?php require_once('footer.php'); ?>
+*/

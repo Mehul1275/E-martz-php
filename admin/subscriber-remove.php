@@ -1,5 +1,7 @@
 <?php require_once('header.php'); ?>
 
+<section class="content-header" style="margin-top: -40px;">
+
 <?php
 	
 	// Delete from tbl_subscriber

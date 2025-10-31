@@ -121,66 +121,120 @@ if( !isset($_REQUEST['id']) || !isset($_REQUEST['type']) ) {
 }
 ?>
 
-<div class="page-banner" style="background-image: url(assets/uploads/<?php echo $banner_product_category; ?>)">
-    <div class="inner">
-        <h1><?php echo LANG_VALUE_50; ?> <?php echo $title; ?></h1>
-    </div>
-</div>
-
-<div class="page">
+<div class="page" style="padding: 40px 0; background: #f8fafc;">
     <div class="container">
         <div class="row">
-          <div class="col-md-3">
+            <div class="col-md-3">
                 <?php require_once('sidebar-category.php'); ?>
             </div>
             <div class="col-md-9">
+                <div class="category-header">
+                    <h1 style="color: var(--color-neutral-900); margin-bottom: 8px; font-weight: 600;">
+                        <?php echo LANG_VALUE_50; ?> <?php echo $title; ?>
+                    </h1>
+                    
+                    <?php
+                    $filter_info = [];
+                    $min_price = isset($_GET['min_price']) && $_GET['min_price'] !== '' ? (float)$_GET['min_price'] : null;
+                    $max_price = isset($_GET['max_price']) && $_GET['max_price'] !== '' ? (float)$_GET['max_price'] : null;
+                    
+                    if ($min_price !== null || $max_price !== null) {
+                        if ($min_price !== null && $max_price !== null) {
+                            $filter_info[] = "Price: ₹{$min_price} - ₹{$max_price}";
+                        } elseif ($min_price !== null) {
+                            $filter_info[] = "Price: Above ₹{$min_price}";
+                        } elseif ($max_price !== null) {
+                            $filter_info[] = "Price: Under ₹{$max_price}";
+                        }
+                    }
+                    
+                    if (!empty($filter_info)) {
+                        echo '<div class="active-filters" style="margin: 10px 0; padding: 10px; background: #f0f8ff; border: 1px solid #d6e9ff; border-radius: 6px;">';
+                        echo '<i class="fa fa-filter" style="color: var(--color-primary); margin-right: 8px;"></i>';
+                        echo '<strong>Active Filters:</strong> ' . implode(', ', $filter_info);
+                        echo ' <a href="?' . http_build_query(array_diff_key($_GET, array_flip(['min_price', 'max_price']))) . '" style="color: #ff4757; margin-left: 10px; text-decoration: none;"><i class="fa fa-times"></i> Clear Filters</a>';
+                        echo '</div>';
+                    }
+                    ?>
+                    
+                    <p class="text-muted">Discover our curated selection of quality products</p>
+                    
+                </div>
                 
-                <h3><?php echo LANG_VALUE_51; ?> "<?php echo $title; ?>"</h3>
-                <div class="product product-cat">
-
+                <div class="products-grid">
                     <div class="row">
                         <?php
-                        // Checking if any product is available or not
-                        $prod_count = 0;
-                        $statement = $pdo->prepare("SELECT * FROM tbl_product");
-                        $statement->execute();
-                        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-                        foreach ($result as $row) {
-                            $prod_table_ecat_ids[] = $row['ecat_id'];
-                        }
-
-                        for($ii=0;$ii<count($final_ecat_ids);$ii++):
-                            if(in_array($final_ecat_ids[$ii],$prod_table_ecat_ids)) {
-                                $prod_count++;
+                        // Price filtering
+                        $min_price = isset($_GET['min_price']) && $_GET['min_price'] !== '' ? (float)$_GET['min_price'] : null;
+                        $max_price = isset($_GET['max_price']) && $_GET['max_price'] !== '' ? (float)$_GET['max_price'] : null;
+                        
+                        // Build price filter SQL
+                        $price_filter = '';
+                        $price_params = [];
+                        
+                            if ($min_price !== null || $max_price !== null) {
+                                if ($min_price !== null && $max_price !== null) {
+                                    $price_filter = ' AND CAST(p_current_price AS DECIMAL(10,2)) BETWEEN ? AND ?';
+                                    $price_params = [$min_price, $max_price];
+                                } elseif ($min_price !== null) {
+                                    $price_filter = ' AND CAST(p_current_price AS DECIMAL(10,2)) >= ?';
+                                    $price_params = [$min_price];
+                                } elseif ($max_price !== null) {
+                                    $price_filter = ' AND CAST(p_current_price AS DECIMAL(10,2)) <= ?';
+                                    $price_params = [$max_price];
+                                }
                             }
-                        endfor;
-
-                        if($prod_count==0) {
-                            echo '<div class="pl_15">'.LANG_VALUE_153.'</div>';
+                        
+                        // Collect all products that match the criteria
+                        $all_products = [];
+                        
+                        for($ii=0; $ii<count($final_ecat_ids); $ii++) {
+                            $sql = "SELECT * FROM tbl_product WHERE ecat_id=? AND p_is_active=?" . $price_filter . " ORDER BY p_current_price ASC";
+                            $statement = $pdo->prepare($sql);
+                            $params = array_merge([$final_ecat_ids[$ii], 1], $price_params);
+                            $statement->execute($params);
+                            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+                            
+                            // Add products to our collection
+                            foreach ($result as $row) {
+                                $all_products[] = $row;
+                            }
+                        }
+                        
+                        // Check if any products found
+                        if(count($all_products) == 0) {
+                            $no_products_message = LANG_VALUE_153;
+                            if ($min_price !== null || $max_price !== null) {
+                                $no_products_message = 'No products found in the selected price range.';
+                            }
+                            echo '<div class="col-md-12"><div class="alert alert-info"><i class="fa fa-info-circle"></i> ' . $no_products_message . '</div></div>';
                         } else {
-                            for($ii=0;$ii<count($final_ecat_ids);$ii++) {
-                                $statement = $pdo->prepare("SELECT * FROM tbl_product WHERE ecat_id=? AND p_is_active=?");
-                                $statement->execute(array($final_ecat_ids[$ii],1));
-                                $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-                                foreach ($result as $row) {
+                            // Display all collected products
+                            foreach ($all_products as $row) {
                                     ?>
-                                    <div class="col-md-4 item item-product-cat">
-                                        <div class="inner">
-                                            <div class="thumb">
+                                    <div class="col-md-4 col-sm-6">
+                                        <div class="product-card">
+                                            <div class="product-image<?php if($row['p_qty'] == 0) echo ' oos'; ?>">
                                                 <a href="product.php?id=<?php echo $row['p_id']; ?>">
-                                                    <div class="photo" style="background-image:url(assets/uploads/<?php echo $row['p_featured_photo']; ?>);"></div>
-                                                    <div class="overlay"></div>
+                                                    <img src="assets/uploads/<?php echo $row['p_featured_photo']; ?>" alt="<?php echo htmlspecialchars($row['p_name']); ?>">
                                                 </a>
+                                                <?php if($row['p_qty'] == 0): ?>
+                                                    <div class="oos-badge"><i class="fa fa-ban"></i> Out of Stock</div>
+                                                <?php endif; ?>
+                                                <?php if($row['p_old_price'] != '' && $row['p_old_price'] > $row['p_current_price']): ?>
+                                                    <div class="discount-badge">
+                                                        <?php echo round((($row['p_old_price'] - $row['p_current_price']) / $row['p_old_price']) * 100); ?>% OFF
+                                                    </div>
+                                                <?php endif; ?>
+                                                <?php if(isset($_SESSION['customer']['cust_id'])): ?>
+                                                    <div class="wishlist-icon">
+                                                        <i class="fa fa-heart wishlist-heart" data-product="<?php echo $row['p_id']; ?>"></i>
+                                                    </div>
+                                                <?php endif; ?>
                                             </div>
-                                            <div class="text">
+                                            <div class="product-content">
                                                 <h3><a href="product.php?id=<?php echo $row['p_id']; ?>"><?php echo $row['p_name']; ?></a></h3>
-                                                <h4>
-                                                    ₹<?php echo $row['p_current_price']; ?> 
-                                                    <?php if($row['p_old_price'] != ''): ?>
-                                                    <del>₹<?php echo $row['p_old_price']; ?></del>
-                                                    <?php endif; ?>
-                                                </h4>
-                                                <div class="rating">
+                                                <div class="product-rating">
                                                     <?php
                                                     $t_rating = 0;
                                                     $statement1 = $pdo->prepare("SELECT * FROM tbl_rating WHERE p_id=?");
@@ -196,86 +250,93 @@ if( !isset($_REQUEST['id']) || !isset($_REQUEST['type']) ) {
                                                         $avg_rating = $t_rating / $tot_rating;
                                                     }
                                                     ?>
-                                                    <?php
-                                                    if($avg_rating == 0) {
-                                                        echo '';
-                                                    }
-                                                    elseif($avg_rating == 1.5) {
-                                                        echo '
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star-half-o"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                        ';
-                                                    } 
-                                                    elseif($avg_rating == 2.5) {
-                                                        echo '
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star-half-o"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                        ';
-                                                    }
-                                                    elseif($avg_rating == 3.5) {
-                                                        echo '
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star-half-o"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                        ';
-                                                    }
-                                                    elseif($avg_rating == 4.5) {
-                                                        echo '
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star-half-o"></i>
-                                                        ';
-                                                    }
-                                                    else {
-                                                        for($i=1;$i<=5;$i++) {
-                                                            ?>
-                                                            <?php if($i>$avg_rating): ?>
-                                                                <i class="fa fa-star-o"></i>
-                                                            <?php else: ?>
-                                                                <i class="fa fa-star"></i>
-                                                            <?php endif; ?>
-                                                            <?php
+                                                    <div class="rating">
+                                                        <?php
+                                                        if($avg_rating == 0) {
+                                                            echo '<span class="text-muted">No reviews</span>';
                                                         }
-                                                    }
-                                                    ?>
-                                                </div>
-                                                <?php if($row['p_qty'] == 0): ?>
-                                                    <div class="out-of-stock">
-                                                        <div class="inner">
-                                                            Out Of Stock
-                                                        </div>
+                                                        elseif($avg_rating == 1.5) {
+                                                            echo '
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star-half-o"></i>
+                                                                <i class="fa fa-star-o"></i>
+                                                                <i class="fa fa-star-o"></i>
+                                                                <i class="fa fa-star-o"></i>
+                                                            ';
+                                                        } 
+                                                        elseif($avg_rating == 2.5) {
+                                                            echo '
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star-half-o"></i>
+                                                                <i class="fa fa-star-o"></i>
+                                                                <i class="fa fa-star-o"></i>
+                                                            ';
+                                                        }
+                                                        elseif($avg_rating == 3.5) {
+                                                            echo '
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star-half-o"></i>
+                                                                <i class="fa fa-star-o"></i>
+                                                            ';
+                                                        }
+                                                        elseif($avg_rating == 4.5) {
+                                                            echo '
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star-half-o"></i>
+                                                            ';
+                                                        }
+                                                        else {
+                                                            for($i=1;$i<=5;$i++) {
+                                                                ?>
+                                                                <?php if($i>$avg_rating): ?>
+                                                                    <i class="fa fa-star-o"></i>
+                                                                <?php else: ?>
+                                                                    <i class="fa fa-star"></i>
+                                                                <?php endif; ?>
+                                                                <?php
+                                                            }
+                                                        }
+                                                        ?>
                                                     </div>
-                                                <?php else: ?>
-                                                    <form class="product-action-form" data-product-id="<?php echo $row['p_id']; ?>">
-                                                        <input type="hidden" name="product_id" value="<?php echo $row['p_id']; ?>">
-                                                        <input type="hidden" name="p_qty" value="1">
-                                                        <button type="submit" class="btn btn-warning btn-sm add-to-cart-btn"><i class="fa fa-shopping-cart"></i> <?php echo LANG_VALUE_154; ?></button>
-                                                        <button type="button" class="btn btn-success btn-sm buy-now-btn" style="margin-left:6px;"><i class="fa fa-bolt"></i> Buy Now</button>
-                                                        <i class="fa fa-heart wishlist-heart" data-product="<?php echo $row['p_id']; ?>"></i>
-                                                    </form>
+                                                    <?php if($tot_rating > 0): ?>
+                                                        <span class="review-count">(<?php echo $tot_rating; ?>)</span>
+                                                    <?php endif; ?>
+                                                </div>
+                                                <div class="product-price">
+                                                    <?php if($row['p_old_price'] != ''): ?>
+                                                        <span class="old-price">₹<?php echo $row['p_old_price']; ?></span>
+                                                    <?php endif; ?>
+                                                    <span class="current-price">₹<?php echo $row['p_current_price']; ?></span>
+                                                </div>
+                                                <?php if($row['p_qty'] > 0): ?>
+                                                    <div class="product-actions">
+                                                        <form class="product-action-form" data-product-id="<?php echo $row['p_id']; ?>">
+                                                            <input type="hidden" name="product_id" value="<?php echo $row['p_id']; ?>">
+                                                            <input type="hidden" name="p_qty" value="1">
+                                                            <button type="submit" class="btn btn-primary btn-sm add-to-cart-btn">
+                                                                <i class="fa fa-shopping-cart"></i> Add to Cart
+                                                            </button>
+                                                            <button type="button" class="btn btn-success btn-sm buy-now-btn">
+                                                                <i class="fa fa-bolt"></i> Buy Now
+                                                            </button>
+                                                        </form>
+                                                    </div>
                                                 <?php endif; ?>
                                             </div>
                                         </div>
                                     </div>
                                     <?php
-                                }
-                            }
+                                } // End foreach ($all_products as $row)
                         }
                         ?>
                     </div>
-
                 </div>
-
             </div>
         </div>
     </div>
@@ -284,6 +345,18 @@ if( !isset($_REQUEST['id']) || !isset($_REQUEST['type']) ) {
 <?php require_once('footer.php'); ?>
 
 <div id="toast-container" style="position:fixed;top:30px;right:30px;z-index:9999;"></div>
+
+<style>
+.product-image { position: relative; }
+.product-image.oos img { filter: grayscale(30%) brightness(0.85); }
+.oos-badge {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  background: linear-gradient(135deg,#ff416c 0%, #ff4b2b 100%);
+  color:#fff; padding:10px 16px; border-radius:24px; font-weight:700;
+  letter-spacing:.4px; box-shadow:0 10px 25px rgba(255,65,108,.35);
+  text-transform: uppercase; font-size:13px; z-index: 2; pointer-events: none;
+}
+</style>
 
 <script>
 window.isLoggedIn = <?php echo isset($_SESSION['customer']['cust_id']) ? 'true' : 'false'; ?>;

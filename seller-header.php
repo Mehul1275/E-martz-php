@@ -2,6 +2,8 @@
     <a href="seller-dashboard.php" class="logo">
         <span class="logo-lg">E-martz Seller</span>
     </a>
+    <favicon rel="icon" type="image/ico" href="favicon.ico">
+    <favicon rel="shortcut icon" type="image/ico" href="favicon.ico">
     <nav class="navbar navbar-static-top" role="navigation">
         <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
             <span class="sr-only">Toggle navigation</span>

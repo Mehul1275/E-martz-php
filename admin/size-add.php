@@ -30,62 +30,264 @@ if(isset($_POST['form1'])) {
 }
 ?>
 
-<section class="content-header">
-	<div class="content-header-left">
-		<h1>Add Size</h1>
-	</div>
-	<div class="content-header-right">
-		<a href="size.php" class="btn btn-primary btn-sm">View All</a>
-	</div>
-</section>
+<style>
+.modern-page-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
 
+.modern-page-header h1 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
 
-<section class="content">
+.modern-page-header .subtitle {
+    margin-top: 0.5rem;
+    opacity: 0.9;
+    font-size: 1.1rem;
+}
 
-	<div class="row">
-		<div class="col-md-12">
+.header-actions {
+    margin-top: 1rem;
+}
 
-			<?php if($error_message): ?>
-			<div class="callout callout-danger">
-			
-			<p>
-			<?php echo $error_message; ?>
-			</p>
-			</div>
-			<?php endif; ?>
+.btn-back {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fc 100%);
+    color: #667eea;
+    border: 2px solid rgba(255,255,255,0.3);
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
 
-			<?php if($success_message): ?>
-			<div class="callout callout-success">
-			
-			<p><?php echo $success_message; ?></p>
-			</div>
-			<?php endif; ?>
+.btn-back:hover {
+    background: linear-gradient(135deg, #f8f9fc 0%, #e9ecef 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    color: #5a67d8;
+    text-decoration: none;
+}
 
-			<form class="form-horizontal" action="" method="post">
+.modern-form-container {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    border: 1px solid #e3e6f0;
+    overflow: hidden;
+}
 
-				<div class="box box-info">
-					<div class="box-body">
-						<div class="form-group">
-							<label for="" class="col-sm-2 control-label">Size Name <span>*</span></label>
-							<div class="col-sm-4">
-								<input type="text" class="form-control" name="size_name">
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="" class="col-sm-2 control-label"></label>
-							<div class="col-sm-6">
-								<button type="submit" class="btn btn-success pull-left" name="form1">Submit</button>
-							</div>
-						</div>
-					</div>
-				</div>
+.form-header {
+    background: linear-gradient(135deg, #f8f9fc 0%, #e9ecef 100%);
+    padding: 1.5rem;
+    border-bottom: 1px solid #e3e6f0;
+}
 
-			</form>
+.form-header h3 {
+    margin: 0;
+    color: #2c3e50;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
 
+.form-body {
+    padding: 2rem;
+}
 
-		</div>
-	</div>
+.modern-form-group {
+    margin-bottom: 1.5rem;
+}
 
-</section>
+.modern-form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 0.95rem;
+}
+
+.required {
+    color: #e74a3b;
+    margin-left: 0.25rem;
+}
+
+.modern-form-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid #e3e6f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.modern-form-input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.form-actions {
+    padding: 1.5rem 2rem;
+    background: #f8f9fc;
+    border-top: 1px solid #e3e6f0;
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+}
+
+.btn-submit {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.btn-cancel {
+    background: #6c757d;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-cancel:hover {
+    background: #5a6268;
+    transform: translateY(-2px);
+    color: white;
+    text-decoration: none;
+}
+
+.modern-alert {
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 500;
+}
+
+.modern-alert.success {
+    background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.modern-alert.error {
+    background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.fade-in {
+    animation: fadeIn 0.6s ease-out;
+}
+
+.slide-in {
+    animation: slideIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+</style>
+
+<div class="modern-page-header fade-in" style="margin-top: -40px;">
+    <h1>
+        <i class="fa fa-plus-circle"></i>
+        Add New Size
+    </h1>
+    <div class="subtitle">Create a new product size option</div>
+    <div class="header-actions">
+        <a href="size.php" class="btn-back">
+            <i class="fa fa-arrow-left"></i> Back to Sizes
+        </a>
+    </div>
+</div>
+
+<?php if($error_message): ?>
+<div class="modern-alert error fade-in">
+    <i class="fa fa-exclamation-triangle"></i>
+    <?php echo $error_message; ?>
+</div>
+<?php endif; ?>
+
+<?php if($success_message): ?>
+<div class="modern-alert success fade-in">
+    <i class="fa fa-check-circle"></i>
+    <?php echo $success_message; ?>
+</div>
+<?php endif; ?>
+
+<div class="modern-form-container slide-in">
+    <div class="form-header">
+        <h3>
+            <i class="fa fa-info-circle"></i>
+            Size Information
+        </h3>
+    </div>
+    
+    <form action="" method="post">
+        <div class="form-body">
+            <div class="modern-form-group">
+                <label class="modern-form-label">
+                    Size Name<span class="required">*</span>
+                </label>
+                <input type="text" name="size_name" class="modern-form-input" 
+                       placeholder="Enter size name (e.g., Small, Medium, Large, XL)" 
+                       required>
+            </div>
+        </div>
+        
+        <div class="form-actions">
+            <a href="size.php" class="btn-cancel">
+                <i class="fa fa-times"></i> Cancel
+            </a>
+            <button type="submit" name="form1" class="btn-submit">
+                <i class="fa fa-save"></i> Add Size
+            </button>
+        </div>
+    </form>
+</div>
 
 <?php require_once('footer.php'); ?>

@@ -1,12 +1,18 @@
 <?php require_once('header.php'); ?>
 
-<section class="content-header">
-	<div class="content-header-left">
-		<h1>View Photos</h1>
+<section class="modern-page-header fade-in" style="margin-top: -40px;">
+	<div class="page-header">
+		<h1 class="page-title">
+			<i class="fa fa-image"></i>
+			Photo Gallery Management
+		</h1>
+		<div class="page-actions">
+			<a href="photo-add.php" class="modern-btn modern-btn-primary">
+				<i class="fa fa-plus"></i> Add New Photo
+			</a>
+		</div>
 	</div>
-	<div class="content-header-right">
-		<a href="photo-add.php" class="btn btn-primary btn-sm">Add New</a>
-	</div>
+	<p style="margin: 0.5rem 0 0 0; color: #64748b;">Manage website photo gallery and images</p>
 </section>
 
 
@@ -16,16 +22,15 @@
     <div class="col-md-12">
 
 
-      <div class="box box-info">
-        
-        <div class="box-body table-responsive">
-          <table id="example1" class="table table-bordered table-striped">
+      <div class="modern-table-container">
+        <div class="table-responsive">
+          <table id="example1" class="modern-table">
 			<thead>
 			    <tr>
-			        <th>#</th>
+			        <th width="50">#</th>
 			        <th>Caption</th>
-			        <th>Photo</th>
-			        <th>Action</th>
+			        <th width="200">Photo Preview</th>
+			        <th width="150">Actions</th>
 			    </tr>
 			</thead>
             <tbody>
@@ -40,13 +45,20 @@
 	            	?>
 	                <tr>
 	                    <td><?php echo $i; ?></td>
-	                    <td><?php echo $row['caption']; ?></td>
-	                    <td>
-	                    	<img src="../assets/uploads/<?php echo $row['photo']; ?>" width="140">
+	                    <td><?php echo htmlspecialchars($row['caption']); ?></td>
+	                    <td class="text-center">
+	                    	<img src="../assets/uploads/<?php echo htmlspecialchars($row['photo']); ?>" 
+	                    		 alt="<?php echo htmlspecialchars($row['caption']); ?>" 
+	                    		 class="photo-preview" 
+	                    		 style="width: 120px; height: 80px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
 	                    </td>
 	                    <td>
-	                        <a href="photo-edit.php?id=<?php echo $row['id']; ?>" class="btn btn-primary btn-xs">Edit</a>
-	                        <a href="#" class="btn btn-danger btn-xs" data-href="photo-delete.php?id=<?php echo $row['id']; ?>" data-toggle="modal" data-target="#confirm-delete">Delete</a>
+	                        <a href="photo-edit.php?id=<?php echo $row['id']; ?>" class="modern-btn modern-btn-sm modern-btn-info">
+	                        	<i class="fa fa-edit"></i> Edit
+	                        </a>
+	                        <a href="#" class="modern-btn modern-btn-sm modern-btn-danger" data-href="photo-delete.php?id=<?php echo $row['id']; ?>" data-toggle="modal" data-target="#confirm-delete">
+	                        	<i class="fa fa-trash"></i> Delete
+	                        </a>
 	                    </td>
 	                </tr>
 	                <?php

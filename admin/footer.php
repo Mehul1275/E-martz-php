@@ -24,6 +24,7 @@
     <script src="js/clipboard.min.js"></script>
 	<script src="js/demo.js"></script>
 	<script src="js/summernote.js"></script>
+	<script src="js/modern-admin.js"></script>
 
 	<script>
 		$(document).ready(function() {
