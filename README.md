@@ -2,6 +2,33 @@
 
 A full-featured e-commerce website built with PHP, MySQL, and modern web technologies.
 
+## Screenshots
+
+### Homepage
+![Homepage](screenshots/homepage.png)
+
+### Product Categories
+![Category View 1](screenshots/cat1.png)
+![Category View 2](screenshots/cat2.png)
+
+### Product Details
+![Product Details](screenshots/product%20details.png)
+
+### Shopping Cart
+![Shopping Cart](screenshots/cart.png)
+
+### Customer Dashboard
+![Customer Dashboard](screenshots/dashboard%20customer.png)
+
+### Wishlist
+![Wishlist](screenshots/wishlist.png)
+
+### Admin Dashboard
+![Admin Dashboard](screenshots/admin%20dashboard.png)
+
+### Seller Dashboard
+![Seller Dashboard](screenshots/seller%20dashboard.png)
+
 ## Features
 
 - User Authentication (Login/Register)
@@ -16,6 +43,17 @@ A full-featured e-commerce website built with PHP, MySQL, and modern web technol
 - Order Tracking
 - Wishlist Management
 - User Profile Management
+
+## Documentation
+
+Detailed documentation is available in the `documentation` folder, covering:
+- System Architecture
+- Database Schema
+- API Documentation
+- Installation Guide
+- User Manual
+- Admin Guide
+- Seller Guide
 
 ## Requirements
 
