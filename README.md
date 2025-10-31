@@ -46,14 +46,23 @@ A full-featured e-commerce website built with PHP, MySQL, and modern web technol
 
 ## Documentation
 
-Detailed documentation is available in the `documentation` folder, covering:
-- System Architecture
-- Database Schema
-- API Documentation
-- Installation Guide
-- User Manual
-- Admin Guide
-- Seller Guide
+Detailed documentation is available in the `Documentation` folder:
+
+- **E-MARTZ.pdf**: Comprehensive project documentation including:
+  - System Architecture
+  - Database Schema
+  - Installation Guide
+  - User Manual
+  - Admin Guide
+  - API Documentation
+  - Security Features
+
+- **E-MARTZ.pptx**: Project presentation with:
+  - Project Overview
+  - Features Showcase
+  - Technical Architecture
+  - Implementation Details
+  - Future Enhancements
 
 ## Requirements
 
